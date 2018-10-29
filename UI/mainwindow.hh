@@ -1,14 +1,21 @@
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
-#include <QWidget>
+
+#include <QMainWindow>
+#include "graphichex.hh"
 
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
+
+
 public:
     MainWindow();
 
+
+protected:
+    void paintEvent(QPaintEvent *e);
 };
 
 #endif // MAINWINDOW_HH
