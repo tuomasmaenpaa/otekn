@@ -11,7 +11,7 @@
 #include "hex.hh"
 #include "cubecoordinate.hh"
 
-const int HEXSIZE = 50;
+const int HEXSIZE = 25;
 
 class graphicHex : public Common::Hex, public QFrame
 {
