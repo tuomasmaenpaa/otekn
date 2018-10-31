@@ -15,7 +15,8 @@ CONFIG += c++14
 
 SOURCES += main.cc \
     mainwindow.cpp \
-    graphichex.cpp
+    graphichex.cpp \
+    gameboard.cpp
 
 HEADERS  += \
     gameboard.hh \

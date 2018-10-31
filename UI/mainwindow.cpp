@@ -11,7 +11,10 @@ MainWindow::MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent *e)
 {
-    QPolygonF polygon;
+    Common::CubeCoordinate c(70,70,70);
+    graphicHex h(c);
+    h.drawHex(this);
+   /* QPolygonF polygon;
     QPainterPath path;
     QLinearGradient grad;
     QPen pen;
@@ -30,7 +33,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     painter.setPen(pen);
     path.closeSubpath();
 
-    painter.drawPath(path);
+    painter.drawPath(path); */
 
 }
 
