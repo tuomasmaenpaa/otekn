@@ -8,13 +8,15 @@
 #include <QPen>
 #include <math.h>
 #include <QMainWindow>
+#include <QGraphicsItem>
+#include <iostream>
 
 #include "hex.hh"
 #include "cubecoordinate.hh"
 
 const int HEXSIZE = 25;
 
-class graphicHex : public Common::Hex, public QFrame
+class graphicHex : public QGraphicsItem
 {
 public:
 
@@ -23,10 +25,14 @@ public:
     QPointF calculatePoints(Common::CubeCoordinate center,int HEXSIZE,int i);
 
     //Draws this particular hex on the window that is given
-    void drawHex(QMainWindow *window);
+    void paint(QPainter* painter,const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 private:
 
+    QRectF boundingRect() const;
+    QPainterPath shape();
     Common::CubeCoordinate center;
 };
 

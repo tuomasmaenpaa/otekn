@@ -3,17 +3,36 @@
 #include <vector>
 #include "cubecoordinate.hh"
 
-MainWindow::MainWindow()
+#include <QApplication>
+
+MainWindow::MainWindow(QGraphicsView &view):
+    _scene(new QGraphicsScene(0,0,500,500,&view))
 {
 
+
+
+    view.setScene(_scene);
+
+    Common::CubeCoordinate c(70,70,70);
+    graphicHex*hp =new graphicHex(c);
+    _scene->addItem(hp);
+    view.show();
+
+}
+
+MainWindow::~MainWindow()
+{
 
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)
 {
-    Common::CubeCoordinate c(70,70,70);
+    /*Common::CubeCoordinate c(70,70,70);
     graphicHex h(c);
-    h.drawHex(this);
+
+    h.paint(this);
+*/
+
    /* QPolygonF polygon;
     QPainterPath path;
     QLinearGradient grad;

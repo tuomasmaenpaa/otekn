@@ -3,6 +3,8 @@
 
 
 #include <QMainWindow>
+#include <QGraphicsView>
+#include <QGraphicsScene>
 #include "graphichex.hh"
 
 
@@ -11,8 +13,11 @@ class MainWindow : public QMainWindow
 
 
 public:
-    MainWindow();
+    MainWindow(QGraphicsView& view);
+    ~MainWindow();
 
+private:
+    QGraphicsScene* _scene;
 
 protected:
     void paintEvent(QPaintEvent *e);

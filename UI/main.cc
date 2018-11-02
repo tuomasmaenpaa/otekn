@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    GameBoard board;
-    MainWindow w;
-    w.show();
+    QGraphicsView view;
+    MainWindow w(view);
+
 
     return a.exec();
 
