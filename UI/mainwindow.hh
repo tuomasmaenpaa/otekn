@@ -16,11 +16,12 @@ public:
     MainWindow(QGraphicsView& view);
     ~MainWindow();
 
+    void drawMap();
+    void addRowToMap(std::vector<Common::CubeCoordinate>& coordinates, int rowLenght, int rowNumber, bool widens);
+
 private:
     QGraphicsScene* _scene;
 
-protected:
-    void paintEvent(QPaintEvent *e);
 };
 
 #endif // MAINWINDOW_HH
