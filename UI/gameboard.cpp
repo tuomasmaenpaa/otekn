@@ -5,7 +5,6 @@
 GameBoard::GameBoard()
 {
 
-    //window->show();
 }
 
 GameBoard::~GameBoard()
@@ -13,10 +12,6 @@ GameBoard::~GameBoard()
 
 }
 
-void GameBoard::addHex(std::shared_ptr<graphicHex> newHex)
-{
-    //newHex->drawHex(window);
-}
 
 int GameBoard::checkTileOccupation(Common::CubeCoordinate) const
 {

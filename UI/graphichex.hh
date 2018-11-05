@@ -29,6 +29,8 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
+    std::shared_ptr <Common::Hex> hexPtr;
+
 private:
 
     QRectF boundingRect() const;

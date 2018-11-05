@@ -42,6 +42,10 @@ void MainWindow::drawMap()
     graphicHex* hp;
     for(auto coord : coordinates){
         hp = new graphicHex(coord);
+
+        //Adding the hex that the graphichex represents to the map
+        hexMap[coord] = hp->hexPtr;
+
         _scene->addItem(hp);
     }
 

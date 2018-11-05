@@ -4,7 +4,9 @@
 
 graphicHex::graphicHex(Common::CubeCoordinate center): center(center)
 {
-
+    //Creating a matching hex with the same cubecoordinate
+    hexPtr = std::shared_ptr<Common::Hex>(new Common::Hex());
+    hexPtr->setCoordinates(center);
 
 }
 
@@ -28,6 +30,7 @@ void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
     path.addPolygon(polygon);
 
+    pen.setWidth(4);
     painter->setBrush(grad);
     painter->setPen(pen);
     path.closeSubpath();

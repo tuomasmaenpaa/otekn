@@ -15,10 +15,6 @@ public:
     GameBoard();
     ~GameBoard();
 
-
-    //Adds a graphicHex to the gameboard
-    void addHex(std::shared_ptr < graphicHex > newHex);
-
     int checkTileOccupation(Common::CubeCoordinate) const;
     bool isWaterTile(Common::CubeCoordinate) const;
     std::shared_ptr< Common::Hex > getHex(Common::CubeCoordinate) const;
