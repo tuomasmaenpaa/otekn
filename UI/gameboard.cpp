@@ -2,7 +2,7 @@
 
 
 
-GameBoard::GameBoard()
+GameBoard::GameBoard(std::map< Common::CubeCoordinate, std::shared_ptr<Common::Hex>>* hexMap): _hexMap(*hexMap)
 {
 
 }

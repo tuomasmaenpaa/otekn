@@ -8,10 +8,14 @@
 #include <QApplication>
 
 MainWindow::MainWindow(QGraphicsView &view):
-    _scene(new QGraphicsScene(0,0,500,500,&view))
+    _scene(new QGraphicsScene(0,0,500,500,&view)),
+    _state(std::shared_ptr<GameState>(new GameState()))/*,
+    _engine(std::shared_ptr<Logic::GameEngine>(new Logic::GameEngine(_board, _state, _players)))*/
 {
 
-
+    //Creating the gameboard
+    hexMapPtr = &hexMap;
+    _board = std::shared_ptr<GameBoard>(new GameBoard(hexMapPtr));
 
     view.setScene(_scene);
     drawMap();
@@ -48,6 +52,8 @@ void MainWindow::drawMap()
 
         _scene->addItem(hp);
     }
+
+    std::cout<<hexMap.size();
 
 }
 

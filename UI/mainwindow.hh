@@ -6,7 +6,12 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <map>
+#include <gamestate.hh>
+#include <gameengine.hh>
+
+#include "gameboard.hh"
 #include "graphichex.hh"
+#include "player.hh"
 
 
 class MainWindow : public QMainWindow
@@ -22,9 +27,14 @@ public:
 
     //This map contains the hexes that the graphichexes represent
     std::map< Common::CubeCoordinate, std::shared_ptr<Common::Hex>> hexMap;
+    std::map< Common::CubeCoordinate, std::shared_ptr<Common::Hex>>* hexMapPtr;
 
 private:
     QGraphicsScene* _scene;
+    std::shared_ptr <GameBoard> _board;
+    std::shared_ptr <GameState> _state;
+    std::shared_ptr <Logic::GameEngine> _engine;
+    std::vector<std::shared_ptr<Player>> _players={};
 
 };
 

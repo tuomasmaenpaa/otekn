@@ -12,7 +12,7 @@
 class GameBoard : public Common::IGameBoard
 {
 public:
-    GameBoard();
+    GameBoard(std::map<Common::CubeCoordinate, std::shared_ptr<Common::Hex> >* hexMap);
     ~GameBoard();
 
     int checkTileOccupation(Common::CubeCoordinate) const;
@@ -28,6 +28,7 @@ public:
 
 private:
 
+    std::map <Common::CubeCoordinate, std::shared_ptr<Common::Hex>> _hexMap;
     std::shared_ptr <QMainWindow> window;
 
 };
