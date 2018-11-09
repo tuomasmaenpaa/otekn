@@ -20,7 +20,7 @@ class graphicHex : public QGraphicsItem
 {
 public:
 
-    graphicHex(Common::CubeCoordinate center);
+    graphicHex(Common::CubeCoordinate center, std::shared_ptr<Common::Hex> hexPtr);
 
     QPointF calculatePoints(Common::CubeCoordinate center,int HEXSIZE,int i);
 
@@ -29,13 +29,17 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
-    std::shared_ptr <Common::Hex> hexPtr;
+    //Sets the hex that this graphics hex is pointing to
+    void setHex(std::shared_ptr <Common::Hex> hexPtr);
 
 private:
 
     QRectF boundingRect() const;
     QPainterPath shape();
     Common::CubeCoordinate center;
+
+    //The hex that this graphichex represents
+    std::shared_ptr <Common::Hex> _hexPtr;
 };
 
 #endif // GRAPHICHEX_HH

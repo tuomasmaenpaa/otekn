@@ -1,5 +1,15 @@
 #include "gamestate.hh"
 
+GameState::GameState()
+{
+
+}
+
+GameState::~GameState()
+{
+
+}
+
 Common::GamePhase GameState::currentGamePhase() const
 {
 
@@ -20,12 +30,3 @@ void GameState::changePlayerTurn(int nextPlayer)
 
 }
 
-GameState::GameState()
-{
-
-}
-
-GameState::~GameState()
-{
-
-}

@@ -2,11 +2,13 @@
 #include <QPainter>
 
 
-graphicHex::graphicHex(Common::CubeCoordinate center): center(center)
+graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::Hex> hexPtr):
+    center(center),
+    _hexPtr(hexPtr)
 {
     //Creating a matching hex with the same cubecoordinate
-    hexPtr = std::shared_ptr<Common::Hex>(new Common::Hex());
-    hexPtr->setCoordinates(center);
+    /*hexPtr = std::shared_ptr<Common::Hex>(new Common::Hex());
+    hexPtr->setCoordinates(center);*/
 
 }
 
@@ -30,7 +32,6 @@ void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
     path.addPolygon(polygon);
 
-    pen.setWidth(4);
     painter->setBrush(grad);
     painter->setPen(pen);
     path.closeSubpath();
@@ -44,6 +45,11 @@ void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 
 
+}
+
+void graphicHex::setHex(std::shared_ptr<Common::Hex> hexPtr)
+{
+    _hexPtr = hexPtr;
 }
 
 

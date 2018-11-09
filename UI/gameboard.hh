@@ -7,18 +7,19 @@
 
 #include "igameboard.hh"
 #include "graphichex.hh"
+#include "QGraphicsScene"
 
 
 class GameBoard : public Common::IGameBoard
 {
 public:
-    GameBoard(std::map<Common::CubeCoordinate, std::shared_ptr<Common::Hex> >* hexMap);
+    GameBoard(std::shared_ptr<QGraphicsScene> scene);
     ~GameBoard();
 
-    int checkTileOccupation(Common::CubeCoordinate) const;
-    bool isWaterTile(Common::CubeCoordinate) const;
-    std::shared_ptr< Common::Hex > getHex(Common::CubeCoordinate) const;
-    void addPawn(int, int);
+    int checkTileOccupation(Common::CubeCoordinate coord) const;
+    bool isWaterTile(Common::CubeCoordinate coord) const;
+    std::shared_ptr< Common::Hex > getHex(Common::CubeCoordinate coord) const;
+    void addPawn(int playerId, int pawnId);
     void movePawn(int, int);
     void movePawn(int, Common::CubeCoordinate);
     void moveActor(int, Common::CubeCoordinate);
@@ -30,6 +31,7 @@ private:
 
     std::map <Common::CubeCoordinate, std::shared_ptr<Common::Hex>> _hexMap;
     std::shared_ptr <QMainWindow> window;
+    std::shared_ptr <QGraphicsScene> _scene;
 
 };
 #endif // GAMEBOARD_HH

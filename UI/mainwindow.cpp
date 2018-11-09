@@ -7,31 +7,23 @@
 
 #include <QApplication>
 
-MainWindow::MainWindow(QGraphicsView &view):
-    _scene(new QGraphicsScene(0,0,500,500,&view)),
-    _state(std::shared_ptr<GameState>(new GameState()))/*,
-    _engine(std::shared_ptr<Logic::GameEngine>(new Logic::GameEngine(_board, _state, _players)))*/
+MainWindow::MainWindow(QGraphicsView &view, std::shared_ptr<QGraphicsScene> scene, std::shared_ptr<Common::IGameRunner> runner):
+    _scene(scene)
 {
-
-    //Creating the gameboard
-    hexMapPtr = &hexMap;
-    _board = std::shared_ptr<GameBoard>(new GameBoard(hexMapPtr));
-
-    view.setScene(_scene);
-    drawMap();
+    view.setScene(_scene.get());
     view.show();
 
 }
 
 MainWindow::~MainWindow()
 {
-    delete _scene;
+
 }
 
 void MainWindow::drawMap()
 {
 
-    std::vector<Common::CubeCoordinate> coordinates;
+  /*  std::vector<Common::CubeCoordinate> coordinates;
 
     // top half of the map
     for (int i=1; i<6; i++){
@@ -48,13 +40,11 @@ void MainWindow::drawMap()
         hp = new graphicHex(coord);
 
         //Adding the hex that the graphichex represents to the map
-        hexMap[coord] = hp->hexPtr;
+        //hexMap[coord] = hp->_hexPtr;
 
         _scene->addItem(hp);
     }
-
-    std::cout<<hexMap.size();
-
+*/
 }
 
 void MainWindow::addRowToMap(std::vector<Common::CubeCoordinate> &coordinates, int rowLenght, int rowNumber, bool widens)

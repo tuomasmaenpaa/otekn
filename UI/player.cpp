@@ -10,7 +10,7 @@ Player::~Player()
 
 }
 
-int Player::getPlayerId()
+int Player::getPlayerId() const
 {
 
 }
@@ -20,7 +20,7 @@ void Player::setActionsLeft(unsigned int actionsLeft)
 
 }
 
-unsigned int Player::getActionsLeft()
+unsigned int Player::getActionsLeft() const
 {
 
 }
