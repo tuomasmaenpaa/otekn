@@ -31,10 +31,11 @@ void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     QPainterPath path;
     QLinearGradient grad;
     QPen pen;
+    QBrush brush;
 
 
 
-    for(int i=1; i<7;i++){
+    for(int i=0; i<6;i++){
         polygon << calculatePoints(HEXSIZE,i);
     }
 
@@ -44,7 +45,11 @@ void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->setPen(pen);
     path.closeSubpath();
 
+
+    painter->setBrush(brush);
+
     painter->drawPath(path);
+
 
 }
 
@@ -64,6 +69,7 @@ void graphicHex::setHex(std::shared_ptr<Common::Hex> hexPtr)
 
 QRectF graphicHex::boundingRect() const
 {
+    return QRectF(0,0,HEXSIZE*2,HEXSIZE*2);
 
 }
 
@@ -73,7 +79,7 @@ QPainterPath graphicHex::shape()
     QPainterPath path;
 
 
-    for(int i=1; i<7;i++){
+    for(int i=0; i<6;i++){
         polygon << calculatePoints(HEXSIZE,i);
     }
 
