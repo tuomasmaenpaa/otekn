@@ -56,6 +56,16 @@ void GameBoard::addPawn(int playerId, int pawnId)
 
 }
 
+void GameBoard::addActor(std::shared_ptr<Common::Actor> actor, Common::CubeCoordinate actorCoord)
+{
+
+}
+
+void GameBoard::addTransport(std::shared_ptr<Common::Transport> transport, Common::CubeCoordinate coord)
+{
+
+}
+
 void GameBoard::movePawn(int, int)
 {
 
@@ -67,6 +77,16 @@ void GameBoard::movePawn(int, Common::CubeCoordinate)
 }
 
 void GameBoard::moveActor(int, Common::CubeCoordinate)
+{
+
+}
+
+void GameBoard::moveTransport(int id, Common::CubeCoordinate coord)
+{
+
+}
+
+void GameBoard::removeTransport(int id)
 {
 
 }

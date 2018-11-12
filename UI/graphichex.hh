@@ -32,6 +32,8 @@ public:
     //Sets the hex that this graphics hex is pointing to
     void setHex(std::shared_ptr <Common::Hex> hexPtr);
 
+    void graphicCoordinates(int& graphicX, int& graphicY);
+
 private:
 
     QRectF boundingRect() const;

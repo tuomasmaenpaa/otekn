@@ -52,6 +52,14 @@ void graphicHex::setHex(std::shared_ptr<Common::Hex> hexPtr)
     _hexPtr = hexPtr;
 }
 
+void graphicHex::graphicCoordinates(int &graphicX, int &graphicY)
+{
+
+
+
+
+}
+
 
 
 QRectF graphicHex::boundingRect() const

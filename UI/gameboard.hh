@@ -20,9 +20,13 @@ public:
     bool isWaterTile(Common::CubeCoordinate coord) const;
     std::shared_ptr< Common::Hex > getHex(Common::CubeCoordinate coord) const;
     void addPawn(int playerId, int pawnId);
+    void addActor(std::shared_ptr<Common::Actor> actor, Common::CubeCoordinate actorCoord);
+    void addTransport(std::shared_ptr<Common::Transport> transport, Common::CubeCoordinate coord);
     void movePawn(int, int);
     void movePawn(int, Common::CubeCoordinate);
     void moveActor(int, Common::CubeCoordinate);
+    void moveTransport(int id, Common::CubeCoordinate coord);
+    void removeTransport(int id);
     void removeActor(int);
     void addHex(std::shared_ptr<Common::Hex> newHex);
     void removePawn(int);
