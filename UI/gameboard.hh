@@ -33,7 +33,11 @@ public:
 
 private:
 
+    //This map contains all the hexes with their cubecoordinate as the key
     std::map <Common::CubeCoordinate, std::shared_ptr<Common::Hex>> _hexMap;
+
+    //Ths map contains the pawns with their id as the key
+    std::map <int,std::shared_ptr <Common::Pawn>> _pawnMap;
     std::shared_ptr <QMainWindow> window;
     std::shared_ptr <QGraphicsScene> _scene;
 

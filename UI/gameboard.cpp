@@ -16,25 +16,40 @@ GameBoard::~GameBoard()
 
 int GameBoard::checkTileOccupation(Common::CubeCoordinate coord) const
 {
-    /*Common::Hex hex = _hexMap[coord];
+    //if the tile doesn't exist return -1
+    if(_hexMap.find(coord) == _hexMap.end()){
 
-    return hex.getPawnAmount();*/
+        int a = -1;
+        return a;
+    }
+
+    std::shared_ptr <Common::Hex> wanted;
+    wanted = _hexMap.at(coord);
+
+    return wanted->getPawnAmount();
 }
 
 bool GameBoard::isWaterTile(Common::CubeCoordinate coord) const
 {
-    /*std::shared_ptr<Common::Hex> hex;
-    hex = _hexMap.at(coord);
-
-    //If the hex is a water tile return true otherwise return false
-    if(hex->isWaterTile()){
-
-        return true;
-
-    }else{
+    //if the tile doesn't exist return false
+    if(_hexMap.find(coord) == _hexMap.end()){
 
         return false;
-    }*/
+    }
+
+    std::shared_ptr <Common::Hex> wanted;
+    wanted = _hexMap.at(coord);
+
+    //if the tile is a watertile return true otherwise
+    //return false
+    if(wanted->isWaterTile()){
+
+        return true;
+    }
+    else{
+
+        return false;
+    }
 }
 
 std::shared_ptr<Common::Hex> GameBoard::getHex(Common::CubeCoordinate coord) const
@@ -103,7 +118,10 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
     _hexMap[coord] = newHex;
 
     graphicHex* hex = new graphicHex(coord, newHex);
+
+    //also add item to the scene
     _scene->addItem(hex);
+
     hex->setHex(newHex);
 }
 
