@@ -4,19 +4,25 @@
 
 graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::Hex> hexPtr):
     center(center),
-    _hexPtr(hexPtr)
+    _hexPtr(hexPtr),
+    _axialQ(center.x),
+    _axialR(center.z)
 {
-    //Creating a matching hex with the same cubecoordinate
-    /*hexPtr = std::shared_ptr<Common::Hex>(new Common::Hex());
-    hexPtr->setCoordinates(center);*/
+
 
 }
 
-QPointF graphicHex::calculatePoints(Common::CubeCoordinate center, int HEXSIZE, int i)
+QPointF graphicHex::calculatePoints( int HEXSIZE, int i)
 {
     double angleDegree = 60 * i-30;
     double angleRad = M_PI / 180 * angleDegree;
-    return QPointF(center.x + HEXSIZE * cos(angleRad), center.y + HEXSIZE * sin(angleRad));
+
+
+    double graphicX = HEXSIZE * (sqrt(3) * _axialQ  +  sqrt(3)/2 * _axialR);
+    double graphicY = HEXSIZE * ( 3./2 * _axialR);
+
+
+    return QPointF(graphicX + HEXSIZE * cos(angleRad), graphicY + HEXSIZE * sin(angleRad));
 }
 
 void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0)
@@ -26,8 +32,10 @@ void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     QLinearGradient grad;
     QPen pen;
 
+
+
     for(int i=1; i<7;i++){
-        polygon << calculatePoints(center,HEXSIZE,i);
+        polygon << calculatePoints(HEXSIZE,i);
     }
 
     path.addPolygon(polygon);
@@ -52,14 +60,6 @@ void graphicHex::setHex(std::shared_ptr<Common::Hex> hexPtr)
     _hexPtr = hexPtr;
 }
 
-void graphicHex::graphicCoordinates(int &graphicX, int &graphicY)
-{
-
-
-
-
-}
-
 
 
 QRectF graphicHex::boundingRect() const
@@ -72,8 +72,9 @@ QPainterPath graphicHex::shape()
     QPolygonF polygon;
     QPainterPath path;
 
+
     for(int i=1; i<7;i++){
-        polygon << calculatePoints(center,HEXSIZE,i);
+        polygon << calculatePoints(HEXSIZE,i);
     }
 
     path.addPolygon(polygon);

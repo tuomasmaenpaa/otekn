@@ -22,7 +22,7 @@ public:
 
     graphicHex(Common::CubeCoordinate center, std::shared_ptr<Common::Hex> hexPtr);
 
-    QPointF calculatePoints(Common::CubeCoordinate center,int HEXSIZE,int i);
+    QPointF calculatePoints(int HEXSIZE, int i);
 
     //Draws this particular hex on the window that is given
     void paint(QPainter* painter,const QStyleOptionGraphicsItem* option, QWidget* widget) override;
@@ -32,9 +32,11 @@ public:
     //Sets the hex that this graphics hex is pointing to
     void setHex(std::shared_ptr <Common::Hex> hexPtr);
 
-    void graphicCoordinates(int& graphicX, int& graphicY);
 
 private:
+
+
+
 
     QRectF boundingRect() const;
     QPainterPath shape();
@@ -42,6 +44,8 @@ private:
 
     //The hex that this graphichex represents
     std::shared_ptr <Common::Hex> _hexPtr;
+    int _axialQ;
+    int _axialR;
 };
 
 #endif // GRAPHICHEX_HH

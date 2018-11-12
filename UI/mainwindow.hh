@@ -23,8 +23,6 @@ public:
     MainWindow(QGraphicsView& view, std::shared_ptr<QGraphicsScene> scene, std::shared_ptr<Common::IGameRunner> runner);
     ~MainWindow();
 
-    void drawMap();
-    void addRowToMap(std::vector<Common::CubeCoordinate>& coordinates, int rowLenght, int rowNumber, bool widens);
 
 private:
     std::shared_ptr<QGraphicsScene> _scene;
