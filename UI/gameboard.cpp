@@ -1,5 +1,7 @@
 #include "gameboard.hh"
 
+namespace Student {
+
 
 
 GameBoard::GameBoard(std::shared_ptr<QGraphicsScene> scene):
@@ -66,6 +68,11 @@ std::shared_ptr<Common::Hex> GameBoard::getHex(Common::CubeCoordinate coord) con
     return wantedHex;
 }
 
+void GameBoard::addPawn(int playerId, int pawnId, Common::CubeCoordinate coord)
+{
+
+}
+
 void GameBoard::addPawn(int playerId, int pawnId)
 {
 
@@ -117,7 +124,7 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
 
     _hexMap[coord] = newHex;
 
-    graphicHex* hex = new graphicHex(coord, newHex);
+    Student::graphicHex* hex = new Student::graphicHex(coord, newHex);
 
     //also add item to the scene
     _scene->addItem(hex);
@@ -128,4 +135,5 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
 void GameBoard::removePawn(int)
 {
 
+}
 }

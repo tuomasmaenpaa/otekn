@@ -14,6 +14,8 @@
 #include "player.hh"
 #include "initialize.hh"
 
+namespace Student {
+
 
 class MainWindow : public QMainWindow
 {
@@ -29,5 +31,6 @@ private:
     std::shared_ptr <Common::IGameRunner> _runner;
 
 };
+}
 
 #endif // MAINWINDOW_HH

@@ -1,9 +1,9 @@
 #ifndef GRAPHICHEX_HH
 #define GRAPHICHEX_HH
 
+
 #include <QPainter>
 #include <QPoint>
-#include <QFrame>
 #include <QPolygon>
 #include <QPen>
 #include <math.h>
@@ -15,6 +15,13 @@
 #include "cubecoordinate.hh"
 
 const int HEXSIZE = 25;
+
+
+
+namespace Student {
+
+
+
 
 class graphicHex : public QGraphicsItem
 {
@@ -47,5 +54,6 @@ private:
     int _axialQ;
     int _axialR;
 };
+}
 
 #endif // GRAPHICHEX_HH

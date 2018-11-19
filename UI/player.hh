@@ -3,6 +3,8 @@
 
 #include "iplayer.hh"
 
+namespace Student {
+
 
 class Player : public Common::IPlayer
 {
@@ -16,5 +18,6 @@ public:
     unsigned int getActionsLeft() const;
 
 };
+}
 
 #endif // PLAYER_HH

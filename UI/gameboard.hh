@@ -9,6 +9,8 @@
 #include "graphichex.hh"
 #include "QGraphicsScene"
 
+namespace Student {
+
 
 class GameBoard : public Common::IGameBoard
 {
@@ -19,6 +21,7 @@ public:
     int checkTileOccupation(Common::CubeCoordinate coord) const;
     bool isWaterTile(Common::CubeCoordinate coord) const;
     std::shared_ptr< Common::Hex > getHex(Common::CubeCoordinate coord) const;
+    void addPawn(int playerId, int pawnId,Common::CubeCoordinate coord);
     void addPawn(int playerId, int pawnId);
     void addActor(std::shared_ptr<Common::Actor> actor, Common::CubeCoordinate actorCoord);
     void addTransport(std::shared_ptr<Common::Transport> transport, Common::CubeCoordinate coord);
@@ -42,4 +45,5 @@ private:
     std::shared_ptr <QGraphicsScene> _scene;
 
 };
+}
 #endif // GAMEBOARD_HH

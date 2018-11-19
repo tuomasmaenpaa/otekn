@@ -1,5 +1,9 @@
 #include "gamestate.hh"
 
+
+namespace Student {
+
+
 GameState::GameState()
 {
 
@@ -30,3 +34,4 @@ void GameState::changePlayerTurn(int nextPlayer)
 
 }
 
+}

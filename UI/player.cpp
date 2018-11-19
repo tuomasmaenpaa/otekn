@@ -1,4 +1,6 @@
 #include "player.hh"
+namespace Student {
+
 
 Player::Player()
 {
@@ -23,4 +25,5 @@ void Player::setActionsLeft(unsigned int actionsLeft)
 unsigned int Player::getActionsLeft() const
 {
 
+}
 }

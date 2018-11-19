@@ -3,6 +3,8 @@
 
 #include "igamestate.hh"
 
+namespace Student {
+
 
 class GameState : public Common::IGameState
 {
@@ -15,5 +17,6 @@ public:
     void changeGamePhase(Common::GamePhase nextPhase);
     void changePlayerTurn(int nextPlayer);
 };
+}
 
 #endif // GAMESTATE_HH

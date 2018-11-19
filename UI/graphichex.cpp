@@ -1,6 +1,8 @@
 #include "graphichex.hh"
 #include <QPainter>
 
+namespace Student {
+
 
 graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::Hex> hexPtr):
     center(center),
@@ -87,4 +89,4 @@ QPainterPath graphicHex::shape()
     return path;
 
 }
-
+}
