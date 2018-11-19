@@ -4,8 +4,7 @@ namespace Student {
 
 
 
-GameBoard::GameBoard(std::shared_ptr<QGraphicsScene> scene):
-    _scene(scene)
+GameBoard::GameBoard()
 {
 
 }
@@ -17,7 +16,8 @@ GameBoard::~GameBoard()
 
 
 int GameBoard::checkTileOccupation(Common::CubeCoordinate coord) const
-{
+{//auto a = std::make_shared<Student::graphicHex>(coord, newHex);
+
     //if the tile doesn't exist return -1
     if(_hexMap.find(coord) == _hexMap.end()){
 
@@ -124,16 +124,27 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
 
     _hexMap[coord] = newHex;
 
-    Student::graphicHex* hex = new Student::graphicHex(coord, newHex);
+    std::shared_ptr <graphicHex> hex = std::shared_ptr<graphicHex>(new graphicHex(coord, newHex));
 
     //also add item to the scene
-    _scene->addItem(hex);
 
+    _graphicHexMap[coord] = hex;
+
+    _scene->addItem(hex.get());
     hex->setHex(newHex);
+    hex->setPosition();
+    hex->update();
+
 }
 
 void GameBoard::removePawn(int)
 {
 
+}
+
+void GameBoard::setScene(std::shared_ptr<QGraphicsScene> scene)
+{
+
+    _scene = scene;
 }
 }

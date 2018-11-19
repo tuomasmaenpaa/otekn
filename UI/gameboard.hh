@@ -15,7 +15,7 @@ namespace Student {
 class GameBoard : public Common::IGameBoard
 {
 public:
-    GameBoard(std::shared_ptr<QGraphicsScene> scene);
+    GameBoard();
     ~GameBoard();
 
     int checkTileOccupation(Common::CubeCoordinate coord) const;
@@ -34,10 +34,15 @@ public:
     void addHex(std::shared_ptr<Common::Hex> newHex);
     void removePawn(int);
 
+    void setScene(std::shared_ptr <QGraphicsScene> scene);
+
 private:
 
     //This map contains all the hexes with their cubecoordinate as the key
     std::map <Common::CubeCoordinate, std::shared_ptr<Common::Hex>> _hexMap;
+
+
+    std::map <Common::CubeCoordinate, std::shared_ptr<graphicHex>> _graphicHexMap;
 
     //Ths map contains the pawns with their id as the key
     std::map <int,std::shared_ptr <Common::Pawn>> _pawnMap;

@@ -17,14 +17,17 @@ int main(int argc, char *argv[])
     QGraphicsView view;
     std::shared_ptr<QGraphicsScene> scene = std::shared_ptr<QGraphicsScene>(new QGraphicsScene(&view));
 
-    std::shared_ptr <GameBoard> board = std::shared_ptr<GameBoard>(new GameBoard(scene));
-    std::shared_ptr <GameState> state = std::shared_ptr<GameState>(new GameState());
+    std::shared_ptr <Student::GameBoard> board = std::shared_ptr<Student::GameBoard>(new Student::GameBoard());
+
+    board->setScene(scene);
+
+    std::shared_ptr <Student::GameState> state = std::shared_ptr<Student::GameState>(new Student::GameState());
     std::vector<std::shared_ptr<Common::IPlayer>> players;
     std::shared_ptr <Common::IGameRunner> runner;
 
     runner = Common::Initialization::getGameRunner(board, state, players);
 
-    MainWindow w(view, scene, runner);
+    Student::MainWindow w(view, scene, runner);
 
 
     return a.exec();

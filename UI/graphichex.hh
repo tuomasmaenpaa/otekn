@@ -14,13 +14,10 @@
 #include "hex.hh"
 #include "cubecoordinate.hh"
 
-const int HEXSIZE = 25;
-
 
 
 namespace Student {
-
-
+const int HEXSIZE = 25;
 
 
 class graphicHex : public QGraphicsItem
@@ -38,6 +35,7 @@ public:
 
     //Sets the hex that this graphics hex is pointing to
     void setHex(std::shared_ptr <Common::Hex> hexPtr);
+    void setPosition();
 
 
 private:
