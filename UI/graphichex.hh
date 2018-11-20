@@ -20,7 +20,7 @@ namespace Student {
 const int HEXSIZE = 25;
 
 
-class graphicHex : public QGraphicsItem
+class graphicHex : public QGraphicsPolygonItem
 {
 public:
 
@@ -34,8 +34,9 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
     //Sets the hex that this graphics hex is pointing to
-    void setHex(std::shared_ptr <Common::Hex> hexPtr);
     void setPosition();
+    void setGraphicCenter();
+    QColor setColor();
 
 
 private:
@@ -51,6 +52,8 @@ private:
     std::shared_ptr <Common::Hex> _hexPtr;
     int _axialQ;
     int _axialR;
+    double _graphicX;
+    double _graphicY;
 };
 }
 

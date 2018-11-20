@@ -131,7 +131,8 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
     _graphicHexMap[coord] = hex;
 
     _scene->addItem(hex.get());
-    hex->setHex(newHex);
+
+    hex->setGraphicCenter();
     hex->setPosition();
     hex->update();
 

@@ -15,9 +15,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QGraphicsView view;
-    std::shared_ptr<QGraphicsScene> scene = std::shared_ptr<QGraphicsScene>(new QGraphicsScene(&view));
+    std::shared_ptr<QGraphicsScene> scene = std::shared_ptr<QGraphicsScene>(new QGraphicsScene(-500,-500,1000,1000,&view));
 
     std::shared_ptr <Student::GameBoard> board = std::shared_ptr<Student::GameBoard>(new Student::GameBoard());
+
 
     board->setScene(scene);
 

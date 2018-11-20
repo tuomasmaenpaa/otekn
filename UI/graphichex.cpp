@@ -8,7 +8,7 @@ graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::H
     _axialQ(center.x),
     _axialR(center.z)
 {
-
+    //setFlag(ItemIsSelectable);
 
 }
 
@@ -17,12 +17,7 @@ QPointF graphicHex::calculatePoints( int HEXSIZE, int i)
     double angleDegree = 60 * i-30;
     double angleRad = M_PI / 180 * angleDegree;
 
-
-    double graphicX = HEXSIZE * (sqrt(3) * _axialQ  +  sqrt(3)/2 * _axialR);
-    double graphicY = HEXSIZE * ( 3./2 * _axialR);
-
-
-    return QPointF(graphicX + HEXSIZE * cos(angleRad), graphicY + HEXSIZE * sin(angleRad));
+    return QPointF(_graphicX + HEXSIZE * cos(angleRad), _graphicY + HEXSIZE * sin(angleRad));
 }
 
 void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0)
@@ -46,9 +41,13 @@ void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     path.closeSubpath();
 
 
+
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(setColor());
     painter->setBrush(brush);
 
-    painter->drawPath(path);
+
+    painter->drawPolygon(polygon);
 
 
 }
@@ -60,17 +59,43 @@ void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 }
 
-void graphicHex::setHex(std::shared_ptr<Common::Hex> hexPtr)
-{
-    _hexPtr = hexPtr;
-}
 
 void graphicHex::setPosition()
 {
 
-    double xPos = _axialQ;//HEXSIZE * (sqrt(3) * _axialQ  +  sqrt(3)/2 * _axialR) - HEXSIZE*8;
-    double yPos = _axialR;//HEXSIZE * ( 3./2 * _axialR) - HEXSIZE*8;
-    setPos(xPos,yPos);
+
+    setPos(_graphicX,_graphicY);
+
+    std::cout<<this->pos().x()<<" "<<this->pos().y()<<std::endl;
+}
+
+void graphicHex::setGraphicCenter()
+{
+
+    _graphicX = HEXSIZE * (sqrt(3) * _axialQ  +  sqrt(3)/2 * _axialR);
+    _graphicY = HEXSIZE * ( 3./2 * _axialR);
+
+
+
+}
+
+QColor graphicHex::setColor()
+{
+
+    std::map<std::string,QColor> typeColorMap = {{"Peak",Qt::darkGray},
+                                                {"Mountain",Qt::gray},
+                                                 {"Beach",Qt::yellow},
+                                                 {"Water",Qt::cyan},
+                                                 {"Coral",Qt::magenta},
+                                                {"Forest",Qt::green}};
+
+    std::string pieceType = _hexPtr->getPieceType();
+
+    if(typeColorMap.find(pieceType)!=typeColorMap.end()){
+        return typeColorMap.at(pieceType);
+    }else{
+        return Qt::white;
+    }
 
 
 }
@@ -79,7 +104,7 @@ void graphicHex::setPosition()
 
 QRectF graphicHex::boundingRect() const
 {
-    return QRectF(-HEXSIZE,-HEXSIZE,HEXSIZE,HEXSIZE);
+    return QRectF(-HEXSIZE*sqrt(3),-HEXSIZE,HEXSIZE*sqrt(3),HEXSIZE);
 
 }
 
