@@ -8,6 +8,7 @@
 #include "igameboard.hh"
 #include "graphichex.hh"
 #include "QGraphicsScene"
+#include "pawn.hh"
 
 namespace Student {
 
@@ -46,6 +47,7 @@ private:
 
     //Ths map contains the pawns with their id as the key
     std::map <int,std::shared_ptr <Common::Pawn>> _pawnMap;
+
     std::shared_ptr <QMainWindow> window;
     std::shared_ptr <QGraphicsScene> _scene;
 

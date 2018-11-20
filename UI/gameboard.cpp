@@ -16,35 +16,35 @@ GameBoard::~GameBoard()
 
 
 int GameBoard::checkTileOccupation(Common::CubeCoordinate coord) const
-{//auto a = std::make_shared<Student::graphicHex>(coord, newHex);
+{
+    std::shared_ptr<Common::Hex> hex;
+    hex = getHex(coord);
 
     //if the tile doesn't exist return -1
-    if(_hexMap.find(coord) == _hexMap.end()){
+    if(hex == nullptr){
 
         int a = -1;
         return a;
     }
 
-    std::shared_ptr <Common::Hex> wanted;
-    wanted = _hexMap.at(coord);
 
-    return wanted->getPawnAmount();
+    return hex->getPawnAmount();
 }
 
 bool GameBoard::isWaterTile(Common::CubeCoordinate coord) const
 {
+    std::shared_ptr<Common::Hex> hex;
+    hex = getHex(coord);
+
     //if the tile doesn't exist return false
-    if(_hexMap.find(coord) == _hexMap.end()){
+    if(hex == nullptr){
 
         return false;
     }
 
-    std::shared_ptr <Common::Hex> wanted;
-    wanted = _hexMap.at(coord);
-
     //if the tile is a watertile return true otherwise
     //return false
-    if(wanted->isWaterTile()){
+    if(hex->isWaterTile()){
 
         return true;
     }
@@ -71,11 +71,35 @@ std::shared_ptr<Common::Hex> GameBoard::getHex(Common::CubeCoordinate coord) con
 void GameBoard::addPawn(int playerId, int pawnId, Common::CubeCoordinate coord)
 {
 
+    std::shared_ptr<graphicHex> gHex;
+
+    //if the hex exsists
+    if(_graphicHexMap.find(coord) != _graphicHexMap.end()){
+
+        gHex = _graphicHexMap.at(coord);
+
+        Common::Pawn pawn;
+        pawn.setId(pawnId, playerId);
+
+        //TODO:
+
+        //Create graphic pawn
+
+        //Set the pawn in the normal hex of the graphic hex
+
+        //Draw the pawn
+
+    }
+
+
+
+
 }
 
 void GameBoard::addPawn(int playerId, int pawnId)
 {
-
+    Common::Pawn newPawn;
+    newPawn.setId(pawnId, playerId);
 }
 
 void GameBoard::addActor(std::shared_ptr<Common::Actor> actor, Common::CubeCoordinate actorCoord)

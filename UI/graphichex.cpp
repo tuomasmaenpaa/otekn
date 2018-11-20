@@ -1,3 +1,4 @@
+
 #include "graphichex.hh"
 #include <QPainter>
 
