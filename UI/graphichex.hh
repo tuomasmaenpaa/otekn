@@ -31,24 +31,27 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
-    //Sets the hex that this graphics hex is pointing to
+    //Sets the position of the hex
     void setPosition();
+
+    //Calculates the graphic centerpoints of the hex
     void setGraphicCenter();
+
+    //Sets the corect colour of the hex
     QColor setColor();
+
+    //Creates the polygon that this graphichex represents
     QPolygonF polygon();
 
 
 private:
 
-
-
-
-    //QRectF boundingRect() const;
+    //The cubecoordinate of this hex
     Common::CubeCoordinate center;
-    //QPolygonF _hexagon;
 
     //The hex that this graphichex represents
     std::shared_ptr <Common::Hex> _hexPtr;
+
     int _axialQ;
     int _axialR;
     double _graphicX;

@@ -9,7 +9,14 @@ graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::H
     _axialQ(center.x),
     _axialR(center.z)
 {
-    //setFlag(ItemIsSelectable);
+
+    //Setting the color of the hex
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(setColor());
+    setBrush(brush);
+    
+    //Creates the polygon that this graphichex represents
     setPolygon(polygon());
 
 }
@@ -33,10 +40,8 @@ void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void graphicHex::setPosition()
 {
 
-
     setPos(_graphicX,_graphicY);
 
-    std::cout<<this->pos().x()<<" "<<this->pos().y()<<std::endl;
 }
 
 void graphicHex::setGraphicCenter()
