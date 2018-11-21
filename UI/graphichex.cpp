@@ -21,38 +21,6 @@ QPointF graphicHex::calculatePoints( int HEXSIZE, int i, int centX, int centY)
 
     return QPointF(centX+ HEXSIZE * cos(angleRad), centY + HEXSIZE * sin(angleRad));
 }
-/*
-void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0)
-{
-    QPolygonF polygon;
-    QPainterPath path;
-    QLinearGradient grad;
-    QPen pen;
-    QBrush brush;
-
-
-
-    for(int i=0; i<6;i++){
-        polygon << calculatePoints(HEXSIZE,i);
-    }
-
-    path.addPolygon(polygon);
-
-    painter->setBrush(grad);
-    painter->setPen(pen);
-    path.closeSubpath();
-
-
-
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(setColor());
-    painter->setBrush(brush);
-
-
-    painter->drawPolygon(polygon);
-
-
-}*/
 
 void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -117,26 +85,4 @@ QPolygonF graphicHex::polygon()
 
 }
 
-
-
-QRectF graphicHex::boundingRect() const
-{
-    return QRectF(-HEXSIZE*sqrt(3),-HEXSIZE,HEXSIZE*sqrt(3),HEXSIZE);
-
-}
-
-QPainterPath graphicHex::shape()
-{
-    QPolygonF polygon;
-    QPainterPath path;
-
-
-    for(int i=0; i<6;i++){
-        polygon << calculatePoints(HEXSIZE,i,0,0);
-    }
-
-    path.addPolygon(polygon);
-    return path;
-
-}
 }

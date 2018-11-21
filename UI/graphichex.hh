@@ -28,8 +28,6 @@ public:
 
     QPointF calculatePoints(int HEXSIZE, int i, int centX, int centY);
 
-    //Draws this particular hex on the window that is given
-    //void paint(QPainter* painter,const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
@@ -45,8 +43,7 @@ private:
 
 
 
-    QRectF boundingRect() const;
-    QPainterPath shape();
+    //QRectF boundingRect() const;
     Common::CubeCoordinate center;
     //QPolygonF _hexagon;
 
