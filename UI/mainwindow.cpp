@@ -1,37 +1,30 @@
 #include "mainwindow.hh"
 #include "gameboard.hh"
 #include <vector>
+#include <math.h>
+
 #include "cubecoordinate.hh"
 
-MainWindow::MainWindow()
-{
+#include <QApplication>
 
+namespace Student {
+
+
+MainWindow::MainWindow(QGraphicsView &view, std::shared_ptr<QGraphicsScene> scene, std::shared_ptr<Common::IGameRunner> runner):
+    _scene(scene)
+{
+    view.setScene(_scene.get());
+    view.show();
 
 }
 
-void MainWindow::paintEvent(QPaintEvent *e)
+MainWindow::~MainWindow()
 {
-    QPolygonF polygon;
-    QPainterPath path;
-    QLinearGradient grad;
-    QPen pen;
-    graphicHex hex;
-
-
-    Common::CubeCoordinate c(70,70,70) ;
-
-    for(int i=1; i<7;i++){
-        polygon << hex.calculatePoints(c,HEXSIZE,i);
-    }
-
-    path.addPolygon(polygon);
-    QPainter painter(this);
-    painter.setBrush(grad);
-    painter.setPen(pen);
-    path.closeSubpath();
-
-    painter.drawPath(path);
 
 }
+}
+
+
+
 
 

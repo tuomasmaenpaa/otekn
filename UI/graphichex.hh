@@ -1,25 +1,62 @@
 #ifndef GRAPHICHEX_HH
 #define GRAPHICHEX_HH
 
+
 #include <QPainter>
 #include <QPoint>
-#include <QFrame>
 #include <QPolygon>
 #include <QPen>
 #include <math.h>
+#include <QMainWindow>
+#include <QGraphicsItem>
+#include <iostream>
 
 #include "hex.hh"
 #include "cubecoordinate.hh"
 
-const int HEXSIZE = 50;
 
-class graphicHex : public Common::Hex, public QFrame
+
+namespace Student {
+const int HEXSIZE = 25;
+
+
+class graphicHex : public QGraphicsPolygonItem
 {
 public:
-    graphicHex();
 
-    QPointF calculatePoints(Common::CubeCoordinate center,int HEXSIZE,int i);
+    graphicHex(Common::CubeCoordinate center, std::shared_ptr<Common::Hex> hexPtr);
 
+    QPointF calculatePoints(int HEXSIZE, int i, int centX, int centY);
+
+
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+
+    //Sets the position of the hex
+    void setPosition();
+
+    //Calculates the graphic centerpoints of the hex
+    void setGraphicCenter();
+
+    //Sets the corect colour of the hex
+    QColor setColor();
+
+    //Creates the polygon that this graphichex represents
+    QPolygonF polygon();
+
+
+private:
+
+    //The cubecoordinate of this hex
+    Common::CubeCoordinate center;
+
+    //The hex that this graphichex represents
+    std::shared_ptr <Common::Hex> _hexPtr;
+
+    int _axialQ;
+    int _axialR;
+    double _graphicX;
+    double _graphicY;
 };
+}
 
 #endif // GRAPHICHEX_HH
