@@ -78,16 +78,14 @@ void GameBoard::addPawn(int playerId, int pawnId, Common::CubeCoordinate coord)
 
         gHex = _graphicHexMap.at(coord);
 
-        Common::Pawn pawn;
-        pawn.setId(pawnId, playerId);
+        std::shared_ptr<Common::Pawn> pawn = std::shared_ptr<Common::Pawn>(new Common::Pawn());
+        pawn->setId(pawnId, playerId);
+
+        gHex->addPawn(pawn);
 
         //TODO:
 
-        //Create graphic pawn
-
-        //Set the pawn in the normal hex of the graphic hex
-
-        //Draw the pawn
+        //Draw pawn on the hex
 
     }
 

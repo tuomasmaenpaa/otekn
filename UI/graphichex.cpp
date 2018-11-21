@@ -90,4 +90,9 @@ QPolygonF graphicHex::polygon()
 
 }
 
+void graphicHex::addPawn(std::shared_ptr<Common::Pawn> pawn)
+{
+    _hexPtr->addPawn(pawn);
+}
+
 }

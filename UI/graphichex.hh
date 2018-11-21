@@ -43,6 +43,10 @@ public:
     //Creates the polygon that this graphichex represents
     QPolygonF polygon();
 
+    //Draws the pawn on this graphichex and adds it to the
+    // hex graphichex represents
+    void addPawn(std::shared_ptr<Common::Pawn> pawn);
+
 
 private:
 
