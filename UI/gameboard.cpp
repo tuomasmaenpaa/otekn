@@ -7,6 +7,7 @@ namespace Student {
 GameBoard::GameBoard()
 {
 
+
 }
 
 GameBoard::~GameBoard()
@@ -169,5 +170,10 @@ void GameBoard::setScene(std::shared_ptr<QGraphicsScene> scene)
 {
 
     _scene = scene;
+}
+
+void GameBoard::addPlayer(std::shared_ptr<Player> player)
+{
+    _players.push_back(player);
 }
 }

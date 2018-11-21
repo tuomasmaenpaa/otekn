@@ -19,7 +19,8 @@ SOURCES += main.cc \
     gameboard.cpp \
     player.cpp \
     gamestate.cpp \
-    graphicpawn.cpp
+    graphicpawn.cpp \
+    openingdialog.cpp
 
 HEADERS  += \
     gameboard.hh \
@@ -27,7 +28,8 @@ HEADERS  += \
     gamestate.hh \
     mainwindow.hh \
     graphichex.hh \
-    graphicpawn.hh
+    graphicpawn.hh \
+    openingdialog.hh
 
 INCLUDEPATH += $$PWD/../GameLogic/Engine
 DEPENDPATH += $$PWD/../GameLogic/Engine
@@ -63,3 +65,6 @@ unix:!macx {
 
 QMAKE_EXTRA_TARGETS += copyfiles
 POST_TARGETDEPS += copyfiles
+
+FORMS += \
+    openingdialog.ui

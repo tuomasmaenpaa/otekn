@@ -9,6 +9,8 @@
 #include "graphichex.hh"
 #include "QGraphicsScene"
 #include "pawn.hh"
+#include "iplayer.hh"
+#include "player.hh"
 
 namespace Student {
 
@@ -36,6 +38,7 @@ public:
     void removePawn(int);
 
     void setScene(std::shared_ptr <QGraphicsScene> scene);
+    void addPlayer(std::shared_ptr<Player> player);
 
 private:
 
@@ -47,6 +50,8 @@ private:
 
     //Ths map contains the pawns with their id as the key
     std::map <int,std::shared_ptr <Common::Pawn>> _pawnMap;
+
+    std::vector<std::shared_ptr<Common::IPlayer>> _players;
 
     std::shared_ptr <QMainWindow> window;
     std::shared_ptr <QGraphicsScene> _scene;

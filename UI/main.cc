@@ -4,7 +4,8 @@
 #include "hex.hh"
 #include "mainwindow.hh"
 #include "gameengine.hh"
-
+#include "openingdialog.hh"
+#include <iostream>
 
 #include <memory>
 #include <QApplication>
@@ -24,6 +25,31 @@ int main(int argc, char *argv[])
 
     std::shared_ptr <Student::GameState> state = std::shared_ptr<Student::GameState>(new Student::GameState());
     std::vector<std::shared_ptr<Common::IPlayer>> players;
+
+
+
+    OpeningDialog dialog;
+
+    int playerCount;
+
+    if(dialog.exec() == QDialog::Accepted){
+       std::cout<<dialog.getSpinBoxValue()<<std::endl;
+       playerCount = dialog.getSpinBoxValue();
+
+    }else{
+        return -1;
+    }
+
+    // Adds the amount of players to the game that the user wanted
+
+    for(int i= 0; i<playerCount;++i){
+        std::shared_ptr<Student::Player> player =std::shared_ptr<Student::Player>(new Student::Player(i+1));
+        players.push_back(player);
+        board->addPlayer(player);
+    }
+
+
+
     std::shared_ptr <Common::IGameRunner> runner;
 
     runner = Common::Initialization::getGameRunner(board, state, players);

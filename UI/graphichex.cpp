@@ -15,7 +15,6 @@ graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::H
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(setColor());
     setBrush(brush);
-    
     //Creates the polygon that this graphichex represents
     setPolygon(polygon());
 
@@ -94,5 +93,4 @@ void graphicHex::addPawn(std::shared_ptr<Common::Pawn> pawn)
 {
     _hexPtr->addPawn(pawn);
 }
-
 }
