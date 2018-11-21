@@ -10,17 +10,18 @@ graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::H
     _axialR(center.z)
 {
     //setFlag(ItemIsSelectable);
+    setPolygon(polygon());
 
 }
 
-QPointF graphicHex::calculatePoints( int HEXSIZE, int i)
+QPointF graphicHex::calculatePoints( int HEXSIZE, int i, int centX, int centY)
 {
     double angleDegree = 60 * i-30;
     double angleRad = M_PI / 180 * angleDegree;
 
-    return QPointF(_graphicX + HEXSIZE * cos(angleRad), _graphicY + HEXSIZE * sin(angleRad));
+    return QPointF(centX+ HEXSIZE * cos(angleRad), centY + HEXSIZE * sin(angleRad));
 }
-
+/*
 void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0)
 {
     QPolygonF polygon;
@@ -51,7 +52,7 @@ void graphicHex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->drawPolygon(polygon);
 
 
-}
+}*/
 
 void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -101,6 +102,21 @@ QColor graphicHex::setColor()
 
 }
 
+QPolygonF graphicHex::polygon()
+{
+    QPolygonF polygon;
+
+
+
+    for(int i=0; i<6;i++){
+        polygon << calculatePoints(HEXSIZE,i,0,0);
+    }
+
+
+    return polygon;
+
+}
+
 
 
 QRectF graphicHex::boundingRect() const
@@ -116,7 +132,7 @@ QPainterPath graphicHex::shape()
 
 
     for(int i=0; i<6;i++){
-        polygon << calculatePoints(HEXSIZE,i);
+        polygon << calculatePoints(HEXSIZE,i,0,0);
     }
 
     path.addPolygon(polygon);

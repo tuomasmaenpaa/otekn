@@ -26,10 +26,10 @@ public:
 
     graphicHex(Common::CubeCoordinate center, std::shared_ptr<Common::Hex> hexPtr);
 
-    QPointF calculatePoints(int HEXSIZE, int i);
+    QPointF calculatePoints(int HEXSIZE, int i, int centX, int centY);
 
     //Draws this particular hex on the window that is given
-    void paint(QPainter* painter,const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+    //void paint(QPainter* painter,const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
@@ -37,6 +37,7 @@ public:
     void setPosition();
     void setGraphicCenter();
     QColor setColor();
+    QPolygonF polygon();
 
 
 private:
@@ -47,6 +48,7 @@ private:
     QRectF boundingRect() const;
     QPainterPath shape();
     Common::CubeCoordinate center;
+    //QPolygonF _hexagon;
 
     //The hex that this graphichex represents
     std::shared_ptr <Common::Hex> _hexPtr;
