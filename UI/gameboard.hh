@@ -40,6 +40,10 @@ public:
     void setScene(std::shared_ptr <QGraphicsScene> scene);
     void addPlayer(std::shared_ptr<Player> player);
 
+    std::vector<Common::CubeCoordinate> getCornerTiles();
+
+    void createPawns();
+
 private:
 
     //This map contains all the hexes with their cubecoordinate as the key

@@ -83,6 +83,7 @@ void GameBoard::addPawn(int playerId, int pawnId, Common::CubeCoordinate coord)
         pawn->setId(pawnId, playerId);
 
         gHex->addPawn(pawn);
+        _pawnMap[pawnId] = pawn;
 
         //TODO:
 
@@ -175,5 +176,36 @@ void GameBoard::setScene(std::shared_ptr<QGraphicsScene> scene)
 void GameBoard::addPlayer(std::shared_ptr<Player> player)
 {
     _players.push_back(player);
+}
+
+std::vector<Common::CubeCoordinate> GameBoard::getCornerTiles()
+{
+
+    std::vector<Common::CubeCoordinate> cornerCoords;
+
+    for (auto tile : _hexMap){
+
+        if(tile.second->getPieceType() == "Coral" and (tile.first.x==0 or tile.first.y == 0 or tile.first.z == 0)){
+                cornerCoords.push_back(tile.first);
+    }
+
+    }
+
+    return cornerCoords;
+}
+
+void GameBoard::createPawns()
+{
+
+   std::vector<Common::CubeCoordinate> corners = getCornerTiles();
+
+   //Adding the pawns according to the amount of players in the game.
+   //Players have only one pawn and the pawns id is the same as the players.
+   for(int i = 0; i<_players.size();i++){
+       addPawn(_players.at(i)->getPlayerId(),_players.at(i)->getPlayerId(),corners.at(i));
+   }
+
+
+
 }
 }

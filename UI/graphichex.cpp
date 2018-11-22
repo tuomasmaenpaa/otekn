@@ -1,6 +1,8 @@
-
+#include "pawn.hh"
 #include "graphichex.hh"
 #include <QPainter>
+#include <string>
+
 
 namespace Student {
 graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::Hex> hexPtr):
@@ -20,6 +22,11 @@ graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::H
 
 }
 
+graphicHex::~graphicHex()
+{
+    delete _pawnDisplayPtr;
+}
+
 QPointF graphicHex::calculatePoints( int HEXSIZE, int i, int centX, int centY)
 {
     double angleDegree = 60 * i-30;
@@ -32,6 +39,7 @@ void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
     std::cout<<"clicked x: "<<center.x<<" y: "<<center.y<<" z: "<<center.z<<std::endl;
+    //removePawn(_hexPtr->getPawns().at(0));
 
 }
 
@@ -92,5 +100,19 @@ QPolygonF graphicHex::polygon()
 void graphicHex::addPawn(std::shared_ptr<Common::Pawn> pawn)
 {
     _hexPtr->addPawn(pawn);
+    int pawnNumber = pawn->getId();
+    QString qstr = QString::number(pawnNumber);
+
+    _pawnDisplayPtr = new QGraphicsSimpleTextItem(qstr,this);
+    this->update();
+
+}
+
+void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
+{
+    _hexPtr->removePawn(pawn);
+    delete _pawnDisplayPtr;
+    this->update();
+
 }
 }

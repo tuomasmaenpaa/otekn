@@ -6,6 +6,8 @@
 #include "gameengine.hh"
 #include "openingdialog.hh"
 #include <iostream>
+#include <cubecoordinate.hh>
+
 
 #include <memory>
 #include <QApplication>
@@ -37,11 +39,10 @@ int main(int argc, char *argv[])
        playerCount = dialog.getSpinBoxValue();
 
     }else{
-        return -1;
+        return EXIT_FAILURE;
     }
 
     // Adds the amount of players to the game that the user wanted
-
     for(int i= 0; i<playerCount;++i){
         std::shared_ptr<Student::Player> player =std::shared_ptr<Student::Player>(new Student::Player(i+1));
         players.push_back(player);
@@ -54,6 +55,8 @@ int main(int argc, char *argv[])
 
     runner = Common::Initialization::getGameRunner(board, state, players);
 
+    board->getCornerTiles();
+    board->createPawns();
     Student::MainWindow w(view, scene, runner);
 
 

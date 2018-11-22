@@ -25,6 +25,7 @@ class graphicHex : public QGraphicsPolygonItem
 public:
 
     graphicHex(Common::CubeCoordinate center, std::shared_ptr<Common::Hex> hexPtr);
+    ~graphicHex();
 
     QPointF calculatePoints(int HEXSIZE, int i, int centX, int centY);
 
@@ -46,6 +47,7 @@ public:
     //Draws the pawn on this graphichex and adds it to the
     // hex graphichex represents
     void addPawn(std::shared_ptr<Common::Pawn> pawn);
+    void removePawn(std::shared_ptr<Common::Pawn> pawn);
 
 
 private:
@@ -55,6 +57,8 @@ private:
 
     //The hex that this graphichex represents
     std::shared_ptr <Common::Hex> _hexPtr;
+
+    QGraphicsSimpleTextItem* _pawnDisplayPtr;
 
     int _axialQ;
     int _axialR;
