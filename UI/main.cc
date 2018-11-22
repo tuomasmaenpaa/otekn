@@ -7,6 +7,7 @@
 #include "openingdialog.hh"
 #include <iostream>
 #include <cubecoordinate.hh>
+#include "mainuiwindow.hh"
 
 
 #include <memory>
@@ -57,7 +58,12 @@ int main(int argc, char *argv[])
 
     board->getCornerTiles();
     board->createPawns();
-    Student::MainWindow w(view, scene, runner);
+    //Student::MainWindow w(view, scene, runner);
+    QGraphicsView* viewPtr = &view;
+    //w.setCentralWidget(viewPtr);
+    //w.show();
+    MainUiWindow w(viewPtr,scene);
+    w.show();
 
 
     return a.exec();

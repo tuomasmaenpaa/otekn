@@ -30,6 +30,7 @@ private:
     std::shared_ptr<QGraphicsScene> _scene;
     std::shared_ptr <Common::IGameRunner> _runner;
 
+
 };
 }
 

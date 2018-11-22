@@ -2,6 +2,8 @@
 #include "gameboard.hh"
 #include <vector>
 #include <math.h>
+#include <QHBoxLayout>
+#include <QPushButton>
 
 #include "cubecoordinate.hh"
 
@@ -14,8 +16,12 @@ MainWindow::MainWindow(QGraphicsView &view, std::shared_ptr<QGraphicsScene> scen
     _scene(scene)
 {
 
+
+
     view.setScene(_scene.get());
     view.show();
+
+
 
 }
 
