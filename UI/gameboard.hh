@@ -11,13 +11,17 @@
 #include "pawn.hh"
 #include "iplayer.hh"
 #include "player.hh"
+#include "gamestate.hh"
 
 namespace Student {
 
 
 class GameBoard : public Common::IGameBoard
 {
-public:
+public: 
+
+
+
     GameBoard();
     ~GameBoard();
 
@@ -38,11 +42,22 @@ public:
     void removePawn(int);
 
     void setScene(std::shared_ptr <QGraphicsScene> scene);
+    void setGameState(std::shared_ptr<GameState> state);
     void addPlayer(std::shared_ptr<Player> player);
+    std::map<Common::CubeCoordinate, std::shared_ptr<graphicHex>>& getGraphicHexMap();
 
     std::vector<Common::CubeCoordinate> getCornerTiles();
 
     void createPawns();
+
+    //TODO
+    /*  Clicking hgex sends signal to slot
+     * check what phase it is
+     * if movement phase, check legal moves
+     * if sinking phase check if sinkable tile
+     * if spinning check actor movement
+     *
+     */
 
 private:
 
@@ -56,6 +71,8 @@ private:
     std::map <int,std::shared_ptr <Common::Pawn>> _pawnMap;
 
     std::vector<std::shared_ptr<Common::IPlayer>> _players;
+
+    std::shared_ptr<GameState> _gameState;
 
     std::shared_ptr <QMainWindow> window;
     std::shared_ptr <QGraphicsScene> _scene;

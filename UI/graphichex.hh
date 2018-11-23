@@ -15,7 +15,6 @@
 #include "cubecoordinate.hh"
 
 
-
 namespace Student {
 const int HEXSIZE = 25;
 
@@ -24,7 +23,7 @@ class graphicHex : public QGraphicsPolygonItem
 {
 public:
 
-    graphicHex(Common::CubeCoordinate center, std::shared_ptr<Common::Hex> hexPtr);
+    graphicHex(Common::CubeCoordinate _center, std::shared_ptr<Common::Hex> hexPtr);
     ~graphicHex();
 
     QPointF calculatePoints(int HEXSIZE, int i, int centX, int centY);
@@ -49,11 +48,14 @@ public:
     void addPawn(std::shared_ptr<Common::Pawn> pawn);
     void removePawn(std::shared_ptr<Common::Pawn> pawn);
 
+signals:
+
+    void clickHappened(Common::CubeCoordinate _center);
 
 private:
 
     //The cubecoordinate of this hex
-    Common::CubeCoordinate center;
+    Common::CubeCoordinate _center;
 
     //The hex that this graphichex represents
     std::shared_ptr <Common::Hex> _hexPtr;

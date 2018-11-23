@@ -9,10 +9,12 @@ namespace Student {
 const std::vector<QPointF> PAWNPLACEMENTVECTOR = {QPointF(-18,-18),QPointF(12,-18),QPointF(-4,0)};
 
 graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::Hex> hexPtr):
-    center(center),
+    _center(center),
     _hexPtr(hexPtr),
     _axialQ(center.x),
     _axialR(center.z)
+
+
 {
 
     //Setting the color of the hex
@@ -44,7 +46,8 @@ QPointF graphicHex::calculatePoints( int HEXSIZE, int i, int centX, int centY)
 void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
-    std::cout<<"clicked x: "<<center.x<<" y: "<<center.y<<" z: "<<center.z<<std::endl;
+    std::cout<<"clicked x: "<<_center.x<<" y: "<<_center.y<<" z: "<<_center.z<<std::endl;
+    //emit clickHappened(center);
     //removePawn(_hexPtr->getPawns().at(0));
 
 }

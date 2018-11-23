@@ -159,7 +159,6 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
     hex->setGraphicCenter();
     hex->setPosition();
     hex->update();
-
 }
 
 void GameBoard::removePawn(int)
@@ -173,9 +172,19 @@ void GameBoard::setScene(std::shared_ptr<QGraphicsScene> scene)
     _scene = scene;
 }
 
+void GameBoard::setGameState(std::shared_ptr<GameState> state)
+{
+    _gameState = state;
+}
+
 void GameBoard::addPlayer(std::shared_ptr<Player> player)
 {
     _players.push_back(player);
+}
+
+std::map<Common::CubeCoordinate, std::shared_ptr<graphicHex> > &GameBoard::getGraphicHexMap()
+{
+    return _graphicHexMap;
 }
 
 std::vector<Common::CubeCoordinate> GameBoard::getCornerTiles()
@@ -208,4 +217,6 @@ void GameBoard::createPawns()
 
 
 }
+
+
 }

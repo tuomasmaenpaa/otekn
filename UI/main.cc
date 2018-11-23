@@ -55,14 +55,14 @@ int main(int argc, char *argv[])
     std::shared_ptr <Common::IGameRunner> runner;
 
     runner = Common::Initialization::getGameRunner(board, state, players);
-
+    board->setGameState(state);
     board->getCornerTiles();
     board->createPawns();
     //Student::MainWindow w(view, scene, runner);
     QGraphicsView* viewPtr = &view;
     //w.setCentralWidget(viewPtr);
     //w.show();
-    MainUiWindow w(viewPtr,scene);
+    MainUiWindow w(viewPtr,scene,board);
     w.show();
 
 

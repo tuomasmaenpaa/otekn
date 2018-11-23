@@ -19,15 +19,19 @@ class MainUiWindow;
 
 class MainUiWindow : public QMainWindow
 {
-    Q_OBJECT
+    //Q_OBJECT
 
 public:
-    explicit MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> scene, QWidget *parent = 0);
+    explicit MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> scene,std::shared_ptr<Student::GameBoard> board, QWidget *parent = 0);
     ~MainUiWindow();
+
+public slots:
+    void tileClicked();
 
 private:
     Ui::MainUiWindow *ui;
     std::shared_ptr<QGraphicsScene> _scene;
+    std::shared_ptr<Student::GameBoard> _board;
 };
 
 #endif // MAINUIWINDOW_HH
