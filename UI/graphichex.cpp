@@ -5,6 +5,9 @@
 
 
 namespace Student {
+
+const std::vector<QPointF> PAWNPLACEMENTVECTOR = {QPointF(-18,-18),QPointF(12,-18),QPointF(-4,0)};
+
 graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::Hex> hexPtr):
     center(center),
     _hexPtr(hexPtr),
@@ -24,7 +27,10 @@ graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::H
 
 graphicHex::~graphicHex()
 {
-    delete _pawnDisplayPtr;
+    for(auto a:_pawnDisplayVector){
+
+        delete a;
+    }
 }
 
 QPointF graphicHex::calculatePoints( int HEXSIZE, int i, int centX, int centY)
@@ -99,19 +105,42 @@ QPolygonF graphicHex::polygon()
 
 void graphicHex::addPawn(std::shared_ptr<Common::Pawn> pawn)
 {
+
     _hexPtr->addPawn(pawn);
+
     int pawnNumber = pawn->getId();
     QString qstr = QString::number(pawnNumber);
 
-    _pawnDisplayPtr = new QGraphicsSimpleTextItem(qstr,this);
+
+    for(int i=0; i<_pawnDisplayVector.size();++i){
+
+        if(_pawnDisplayVector.at(i) == nullptr){
+
+            _pawnDisplayVector.at(i) = new QGraphicsSimpleTextItem(qstr,this);
+            _pawnDisplayVector.at(i)->setPos(PAWNPLACEMENTVECTOR.at(i));
+            break;
+        }
+
+    }
+
     this->update();
 
 }
 
 void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
 {
+    //Remove the graphical representation
+    for(auto a:_pawnDisplayVector){
+
+        if(a->text().toInt() == pawn->getId()){
+
+            delete a;
+            break;
+        }
+    }
+
     _hexPtr->removePawn(pawn);
-    delete _pawnDisplayPtr;
+
     this->update();
 
 }

@@ -58,7 +58,10 @@ private:
     //The hex that this graphichex represents
     std::shared_ptr <Common::Hex> _hexPtr;
 
-    QGraphicsSimpleTextItem* _pawnDisplayPtr;
+    //Stores the graphical representations of the pawns
+    std::vector<QGraphicsSimpleTextItem*> _pawnDisplayVector = {(nullptr), (nullptr), (nullptr)};
+
+    std::vector<QPointF> pawnPlacementVec;
 
     int _axialQ;
     int _axialR;
