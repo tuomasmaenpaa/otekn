@@ -47,7 +47,8 @@ void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
     std::cout<<"clicked x: "<<_center.x<<" y: "<<_center.y<<" z: "<<_center.z<<std::endl;
-    //emit clickHappened(center);
+    emit clickHappened(_center);
+
     //removePawn(_hexPtr->getPawns().at(0));
 
 }

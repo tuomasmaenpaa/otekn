@@ -13,7 +13,7 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
     view->setScene(_scene.get());
 
     ui->graphicsView->setScene(_scene.get());
-/*
+
     std::shared_ptr<Student::graphicHex> gHexPtr;
     Student::graphicHex* hexPtr;
 
@@ -21,7 +21,9 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
 
         gHexPtr = a.second;
         hexPtr=gHexPtr.get();
-    }*/
+
+        connect(hexPtr, &Student::graphicHex::clickHappened, this, &MainUiWindow::tileClicked);
+    }
 
 
     //setCentralWidget(view);
@@ -35,5 +37,5 @@ MainUiWindow::~MainUiWindow()
 
 void MainUiWindow::tileClicked()
 {
-
+    std::cout<<"Here"<<std::endl;
 }

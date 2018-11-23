@@ -13,14 +13,18 @@
 
 #include "hex.hh"
 #include "cubecoordinate.hh"
+#include <QGraphicsObject>
 
 
 namespace Student {
 const int HEXSIZE = 25;
 
 
-class graphicHex : public QGraphicsPolygonItem
+
+class graphicHex :public QObject, public QGraphicsPolygonItem
 {
+       Q_OBJECT
+
 public:
 
     graphicHex(Common::CubeCoordinate _center, std::shared_ptr<Common::Hex> hexPtr);
