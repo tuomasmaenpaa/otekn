@@ -16,6 +16,12 @@ public:
     int currentPlayer() const;
     void changeGamePhase(Common::GamePhase nextPhase);
     void changePlayerTurn(int nextPlayer);
+
+private:
+    Common::GamePhase _currentPhase = Common::MOVEMENT;
+    int _currentPlayer = 1;
+
+
 };
 }
 
