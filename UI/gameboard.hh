@@ -39,7 +39,7 @@ public:
     void removeTransport(int id);
     void removeActor(int);
     void addHex(std::shared_ptr<Common::Hex> newHex);
-    void removePawn(int);
+    void removePawn(int id);
 
     void setScene(std::shared_ptr <QGraphicsScene> scene);
     void setGameState(std::shared_ptr<GameState> state);

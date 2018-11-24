@@ -73,9 +73,11 @@ void GameBoard::addPawn(int playerId, int pawnId, Common::CubeCoordinate coord)
 {
 
     std::shared_ptr<graphicHex> gHex;
+    std::shared_ptr<Common::Hex> hex;
 
     //if the hex exsists
-    if(_graphicHexMap.find(coord) != _graphicHexMap.end()){
+    /*if(_graphicHexMap.find(coord) != _graphicHexMap.end()){
+
 
         gHex = _graphicHexMap.at(coord);
 
@@ -85,14 +87,28 @@ void GameBoard::addPawn(int playerId, int pawnId, Common::CubeCoordinate coord)
         gHex->addPawn(pawn);
         _pawnMap[pawnId] = pawn;
 
-        //TODO:
+    }*/
 
-        //Draw pawn on the hex
+    //If the hex exsists add the pawn to the hex
+    if(_hexMap.find(coord) != _hexMap.end()){
 
+        hex = _hexMap.at(coord);
+
+        std::shared_ptr<Common::Pawn> pawn = std::shared_ptr<Common::Pawn>(new Common::Pawn());
+        pawn->setId(pawnId, playerId);
+        pawn->setCoordinates(coord);
+
+        hex->addPawn(pawn);
+        _pawnMap[pawnId] = pawn;
+
+        //If the scene exsists create the graphical representation
+        //for the pawn on the hex
+        if(_scene != nullptr){
+
+            gHex = _graphicHexMap.at(coord);
+            gHex->addPawn(pawn);
+        }
     }
-
-
-
 
 }
 
@@ -104,12 +120,36 @@ void GameBoard::addPawn(int playerId, int pawnId)
 
 void GameBoard::addActor(std::shared_ptr<Common::Actor> actor, Common::CubeCoordinate actorCoord)
 {
+    //If the hex or the actor don't exsist return
+    if((_hexMap.find(actorCoord) == _hexMap.end()) or (actor == nullptr)){
 
+        return;
+    }
+
+    std::shared_ptr<Common::Hex> hex;
+    hex = getHex(actorCoord);
+    hex->addActor(actor);
+
+    /*TODO
+     * Graphical representation of the actor
+     */
 }
 
 void GameBoard::addTransport(std::shared_ptr<Common::Transport> transport, Common::CubeCoordinate coord)
 {
+    //If the hex or the transport don't exsist return
+    if((_hexMap.find(coord) == _hexMap.end()) or (transport == nullptr)){
 
+        return;
+    }
+
+    std::shared_ptr<Common::Hex> hex;
+    hex = getHex(coord);
+    hex->addTransport(transport);
+
+    /*TODO
+     * Graphical representation of the actor
+     */
 }
 
 void GameBoard::movePawn(int, int)
@@ -169,8 +209,28 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
     }
 }
 
-void GameBoard::removePawn(int)
+void GameBoard::removePawn(int id)
 {
+    //If the pawn exsists
+    /*if(_pawnMap.find(id) == _pawnMap.end()){
+
+        return;
+    }
+
+    //Get the coordinates of the pawn
+    std::shared_ptr <Common::Pawn> pawn = _pawnMap.at(id);
+    Common::CubeCoordinate coord = pawn->getCoordinates();
+
+    //if the scene exsists remove the graphical representation of the pawn
+    if(_scene != nullptr){
+
+        std::shared_ptr<graphicHex> gHex = _graphicHexMap.at(coord);
+        gHex->removePawn(pawn);
+    }
+
+    //Remove the pawn from the logic hex
+    std::shared_ptr <Common::Hex> hex = _hexMap.at(coord);
+    hex->removePawn(pawn);*/
 
 }
 

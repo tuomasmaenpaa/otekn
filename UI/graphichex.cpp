@@ -48,6 +48,7 @@ void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
     std::cout<<"clicked x: "<<_center.x<<" y: "<<_center.y<<" z: "<<_center.z<<std::endl;
+    std::cout<<"Pawns: "<<_hexPtr->getPawnAmount()<<std::endl;
     emit clickHappened(_center);
 
     //removePawn(_hexPtr->getPawns().at(0));
@@ -134,7 +135,7 @@ void graphicHex::addPawn(std::shared_ptr<Common::Pawn> pawn)
 
 void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
 {
-    //Remove the graphical representation
+    //Remove the graphical representation of the pawn
     for(auto a:_pawnDisplayVector){
 
         if(a->text().toInt() == pawn->getId()){
@@ -144,9 +145,11 @@ void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
         }
     }
 
-    _hexPtr->removePawn(pawn);
+    //Kommentoitu pois, sillä pawni poistetaan gameboardissa
+   // _hexPtr->removePawn(pawn);
 
     this->update();
 
 }
+
 }
