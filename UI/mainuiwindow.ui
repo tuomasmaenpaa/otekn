@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>975</width>
-    <height>537</height>
+    <width>1647</width>
+    <height>946</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>-1</y>
-      <width>1521</width>
-      <height>891</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1161</width>
+      <height>631</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -28,11 +28,62 @@
       <widget class="QGraphicsView" name="graphicsView"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>PushButton</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="playerTurnLabel">
+         <property name="text">
+          <string>Player X turn</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="gamePhaseLabel">
+         <property name="text">
+          <string>Current phase</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="wheelValueLabel">
+         <property name="text">
+          <string>Wheel values here</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="spinWheelPushButton">
+         <property name="text">
+          <string>Spin the wheel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
@@ -42,7 +93,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>975</width>
+     <width>1647</width>
      <height>25</height>
     </rect>
    </property>

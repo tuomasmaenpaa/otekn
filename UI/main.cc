@@ -62,7 +62,8 @@ int main(int argc, char *argv[])
     QGraphicsView* viewPtr = &view;
     //w.setCentralWidget(viewPtr);
     //w.show();
-    MainUiWindow w(viewPtr,scene,board);
+    MainUiWindow w(viewPtr,scene,board,runner);
+
     w.show();
 
 
