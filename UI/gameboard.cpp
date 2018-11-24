@@ -144,21 +144,29 @@ void GameBoard::removeActor(int)
 
 void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
 {
+    //If the hex doesnt exist
+    if(newHex == nullptr){
+
+        return;
+    }
+
     Common::CubeCoordinate coord = newHex->getCoordinates();
 
     _hexMap[coord] = newHex;
 
     std::shared_ptr <graphicHex> hex = std::shared_ptr<graphicHex>(new graphicHex(coord, newHex));
 
-    //also add item to the scene
+    //also add item to the scene if it exists
+    if(_scene != nullptr){
 
-    _graphicHexMap[coord] = hex;
+        _graphicHexMap[coord] = hex;
 
-    _scene->addItem(hex.get());
+        _scene->addItem(hex.get());
 
-    hex->setGraphicCenter();
-    hex->setPosition();
-    hex->update();
+        hex->setGraphicCenter();
+        hex->setPosition();
+        hex->update();
+    }
 }
 
 void GameBoard::removePawn(int)
