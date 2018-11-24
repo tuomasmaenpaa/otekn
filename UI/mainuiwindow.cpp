@@ -55,4 +55,9 @@ void MainUiWindow::spinWheel()
     wheelValues=_runner->spinWheel();
     std::cout<<wheelValues.first<<" "<<wheelValues.second<<std::endl;
 
+    QString qstr = QString::fromStdString(wheelValues.first + " " + wheelValues.second);
+
+    ui->wheelValueLabel->setText(qstr);
+    update();
+
 }
