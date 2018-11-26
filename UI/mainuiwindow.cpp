@@ -3,7 +3,13 @@
 #include <iostream>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <map>
 
+
+
+const std::map <Common::GamePhase,QString> PHASES = {{Common::MOVEMENT,"Movement"},
+                                                     {Common::SINKING,"Sinking"},
+                                                     {Common::SPINNING,"Spinning"}};
 
 MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> scene, std::shared_ptr<Student::GameBoard> board,
                            std::shared_ptr<Common::IGameRunner> runner, QWidget *parent) :
@@ -34,6 +40,15 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
 
     connect(ui->spinWheelPushButton,&QPushButton::clicked, this, &MainUiWindow::spinWheel);
 
+
+    QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
+    ui->playerTurnLabel->setText(turn);
+
+    Common::GamePhase phase = _runner->currentGamePhase();
+
+    if(PHASES.find(phase)!= PHASES.end()){
+        ui->gamePhaseLabel->setText(PHASES.at(phase));
+    }
 
     //setCentralWidget(view);
     //view->show();
