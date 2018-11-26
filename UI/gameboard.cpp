@@ -287,7 +287,7 @@ void GameBoard::createPawns()
 
 }
 
-void GameBoard::setClicked(std::shared_ptr<Common::Hex> selectedHex)
+void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
 {
 
     // When called first time, function saves the hex that was chosen.
@@ -297,36 +297,44 @@ void GameBoard::setClicked(std::shared_ptr<Common::Hex> selectedHex)
 
     if((_firstClick == nullptr) and (playersPawnOnHex(selectedHex))){
         _firstClick = selectedHex.get();
-        std::cout<<"clicked this one"<<std::endl;
+
 
     }else if((_secondClick == nullptr) and (_firstClick != nullptr)){
 
         _secondClick = selectedHex.get();
-        /*int x = _runner->checkPawnMovement(_firstClick->getCoordinates(),
-                                           _secondClick->getCoordinates(),
-                                           getPawn(_firstClick));
 
-        std::cout<<"second click"<<std::endl;
-        // HOX
-        // No limits on moving
-
-        if(x != -1){
-            //movePawn(getPawn(_firstClick),_secondClick->getCoordinates());
-            resetSelected();
-            _runner->getCurrentPlayer()->setActionsLeft(3);
-        }*/
         try {
+
+            // if movement is successful, move on to next phase
             _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
+            _gameState->changeGamePhase(Common::SINKING);
 
         }catch(Common::IllegalMoveException){
             // no need to do anything
-            std::cout<<"koppi"<<std::endl;
 
         }
-
-        std::cout<<_runner->getCurrentPlayer()->getActionsLeft()<<std::endl;
         resetSelected();
 
+
+    }
+
+}
+
+void GameBoard::setClickedSinking(std::shared_ptr<Common::Hex> selectedHex)
+{
+    try{
+        std::cout<<_runner->flipTile(selectedHex->getCoordinates())<<std::endl;
+
+        //TODO add actor
+
+        // Change the graphic hex to a water tile
+        if(_graphicHexMap.find(selectedHex->getCoordinates()) != _graphicHexMap.end()){
+            _graphicHexMap.at(selectedHex->getCoordinates())->changeColor();
+            _gameState->changeGamePhase(Common::SPINNING);
+        }
+
+
+    }catch(Common::IllegalMoveException){
 
     }
 

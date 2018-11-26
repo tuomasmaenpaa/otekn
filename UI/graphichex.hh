@@ -52,6 +52,8 @@ public:
     void addPawn(std::shared_ptr<Common::Pawn> pawn);
     void removePawn(std::shared_ptr<Common::Pawn> pawn);
 
+    void changeColor();
+
 signals:
 
     void clickHappened( std::shared_ptr <Common::Hex> _hexPtr);
@@ -67,7 +69,7 @@ private:
     //Stores the graphical representations of the pawns
     std::vector<QGraphicsSimpleTextItem*> _pawnDisplayVector = {(nullptr), (nullptr), (nullptr)};
 
-    std::vector<QPointF> pawnPlacementVec;
+    QBrush _brush;
 
     int _axialQ;
     int _axialR;

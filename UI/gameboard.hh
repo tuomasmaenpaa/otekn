@@ -52,7 +52,9 @@ public:
 
     void createPawns();
 
-    void setClicked(std::shared_ptr<Common::Hex> selectedHex);
+    void setClickedMovement(std::shared_ptr<Common::Hex> selectedHex);
+
+    void setClickedSinking(std::shared_ptr<Common::Hex> selectedHex);
 
     bool playersPawnOnHex(std::shared_ptr<Common::Hex> selectedHex);
 

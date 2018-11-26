@@ -18,10 +18,10 @@ graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::H
 {
 
     //Setting the color of the hex
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(setColor());
-    setBrush(brush);
+
+    _brush.setStyle(Qt::SolidPattern);
+    _brush.setColor(setColor());
+    setBrush(_brush);
 
     //Creates the polygon that this graphichex represents
     setPolygon(polygon());
@@ -48,11 +48,7 @@ void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
     std::cout<<"clicked x: "<<_center.x<<" y: "<<_center.y<<" z: "<<_center.z<<std::endl;
-    std::cout<<"Pawns: "<<_hexPtr->getPawnAmount()<<std::endl;
     emit clickHappened(_hexPtr);
-
-    //removePawn(_hexPtr->getPawns().at(0));
-
 }
 
 
@@ -151,6 +147,16 @@ void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
 
     }
     this->update();
+
+}
+
+void graphicHex::changeColor()
+{
+    _brush.setColor(setColor());
+
+    this->setBrush(_brush);
+    this->update();
+
 
 }
 

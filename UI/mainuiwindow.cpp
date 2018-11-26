@@ -82,13 +82,14 @@ void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 
     if ( _runner->currentGamePhase() == Common::MOVEMENT){
         //move
-        _board->setClicked(clickedHex);
+        _board->setClickedMovement(clickedHex);
 
 
 
 
     }else if ( _runner->currentGamePhase() == Common::SINKING){
         //sink
+        _board->setClickedSinking(clickedHex);
     }else if( _runner->currentGamePhase() == Common::SPINNING){
         //spin
     }
