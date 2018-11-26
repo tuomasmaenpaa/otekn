@@ -12,6 +12,7 @@
 #include "iplayer.hh"
 #include "player.hh"
 #include "gamestate.hh"
+#include "igamerunner.hh"
 
 namespace Student {
 
@@ -33,7 +34,7 @@ public:
     void addActor(std::shared_ptr<Common::Actor> actor, Common::CubeCoordinate actorCoord);
     void addTransport(std::shared_ptr<Common::Transport> transport, Common::CubeCoordinate coord);
     void movePawn(int, int);
-    void movePawn(int, Common::CubeCoordinate);
+    void movePawn(int pawnId, Common::CubeCoordinate target);
     void moveActor(int, Common::CubeCoordinate);
     void moveTransport(int id, Common::CubeCoordinate coord);
     void removeTransport(int id);
@@ -43,12 +44,21 @@ public:
 
     void setScene(std::shared_ptr <QGraphicsScene> scene);
     void setGameState(std::shared_ptr<GameState> state);
+    void setRunner(std::shared_ptr <Common::IGameRunner> runner);
     void addPlayer(std::shared_ptr<Player> player);
     std::map<Common::CubeCoordinate, std::shared_ptr<graphicHex>>& getGraphicHexMap();
 
     std::vector<Common::CubeCoordinate> getCornerTiles();
 
     void createPawns();
+
+    void setClicked(std::shared_ptr<Common::Hex> selectedHex);
+
+    bool playersPawnOnHex(std::shared_ptr<Common::Hex> selectedHex);
+
+    int getPawn(Common::Hex* source);
+
+    void resetSelected();
 
     //TODO
     /*  Clicking hgex sends signal to slot
@@ -73,6 +83,16 @@ private:
     std::vector<std::shared_ptr<Common::IPlayer>> _players;
 
     std::shared_ptr<GameState> _gameState;
+
+    std::shared_ptr <Common::IGameRunner> _runner;
+
+
+    /*
+     * Pointers to the hexes that are clicked.
+     * If the click was not legal, pointer will remain nullptr
+     */
+    Common::Hex* _firstClick = nullptr;
+    Common::Hex* _secondClick = nullptr;
 
     std::shared_ptr <QMainWindow> window;
     std::shared_ptr <QGraphicsScene> _scene;

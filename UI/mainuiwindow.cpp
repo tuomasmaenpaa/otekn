@@ -12,12 +12,13 @@ const std::map <Common::GamePhase,QString> PHASES = {{Common::MOVEMENT,"Movement
                                                      {Common::SPINNING,"Spinning"}};
 
 MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> scene, std::shared_ptr<Student::GameBoard> board,
-                           std::shared_ptr<Common::IGameRunner> runner, QWidget *parent) :
+                           std::shared_ptr<Common::IGameRunner> runner, std::shared_ptr <Student::GameState> state, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainUiWindow),
     _scene(scene),
     _board(board),
-    _runner(runner)
+    _runner(runner),
+    _state(state)
 
 
 {
@@ -40,15 +41,11 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
 
     connect(ui->spinWheelPushButton,&QPushButton::clicked, this, &MainUiWindow::spinWheel);
 
-
+    /*
     QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
     ui->playerTurnLabel->setText(turn);
-
-    Common::GamePhase phase = _runner->currentGamePhase();
-
-    if(PHASES.find(phase)!= PHASES.end()){
-        ui->gamePhaseLabel->setText(PHASES.at(phase));
-    }
+    */
+    updateLabels();
 
     //setCentralWidget(view);
     //view->show();
@@ -59,9 +56,47 @@ MainUiWindow::~MainUiWindow()
     delete ui;
 }
 
-void MainUiWindow::tileClicked()
+void MainUiWindow::updateLabels()
+{
+    Common::GamePhase phase = _runner->currentGamePhase();
+
+    if(PHASES.find(phase)!= PHASES.end()){
+        ui->gamePhaseLabel->setText(PHASES.at(phase));
+    }
+
+
+    QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
+    ui->playerTurnLabel->setText(turn);
+
+    update();
+
+
+
+}
+
+void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 {
     std::cout<<"Here"<<std::endl;
+
+
+
+    if ( _runner->currentGamePhase() == Common::MOVEMENT){
+        //move
+        _board->setClicked(clickedHex);
+
+
+
+
+    }else if ( _runner->currentGamePhase() == Common::SINKING){
+        //sink
+    }else if( _runner->currentGamePhase() == Common::SPINNING){
+        //spin
+    }
+
+
+    updateLabels();
+
+
 }
 
 void MainUiWindow::spinWheel()
@@ -73,6 +108,18 @@ void MainUiWindow::spinWheel()
     QString qstr = QString::fromStdString(wheelValues.first + " " + wheelValues.second);
 
     ui->wheelValueLabel->setText(qstr);
+
+
+    Common::GamePhase phase = _runner->currentGamePhase();
+
+    if(PHASES.find(phase)!= PHASES.end()){
+        ui->gamePhaseLabel->setText(PHASES.at(phase));
+    }
+
+
+
+
     update();
+    updateLabels();
 
 }

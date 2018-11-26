@@ -54,7 +54,7 @@ public:
 
 signals:
 
-    void clickHappened(Common::CubeCoordinate _center);
+    void clickHappened( std::shared_ptr <Common::Hex> _hexPtr);
 
 private:
 

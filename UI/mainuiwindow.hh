@@ -25,11 +25,13 @@ public:
     explicit MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> scene,
                           std::shared_ptr<Student::GameBoard> board,
                           std::shared_ptr <Common::IGameRunner> runner,
+                          std::shared_ptr <Student::GameState> state,
                           QWidget *parent = 0);
     ~MainUiWindow();
+    void updateLabels();
 
 public slots:
-    void tileClicked();
+    void tileClicked(std::shared_ptr<Common::Hex> clickedHex);
     void spinWheel();
 
 private:
@@ -37,6 +39,7 @@ private:
     std::shared_ptr<QGraphicsScene> _scene;
     std::shared_ptr<Student::GameBoard> _board;
     std::shared_ptr <Common::IGameRunner> _runner;
+    std::shared_ptr <Student::GameState> _state;
 };
 
 #endif // MAINUIWINDOW_HH

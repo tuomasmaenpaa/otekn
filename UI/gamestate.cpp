@@ -32,6 +32,7 @@ void GameState::changeGamePhase(Common::GamePhase nextPhase)
 void GameState::changePlayerTurn(int nextPlayer)
 {
     _currentPlayer = nextPlayer;
+    changeGamePhase(Common::MOVEMENT);
 
 }
 

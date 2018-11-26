@@ -58,11 +58,14 @@ int main(int argc, char *argv[])
     board->setGameState(state);
     board->getCornerTiles();
     board->createPawns();
+    board->setRunner(runner);
+
+
     //Student::MainWindow w(view, scene, runner);
     QGraphicsView* viewPtr = &view;
     //w.setCentralWidget(viewPtr);
     //w.show();
-    MainUiWindow w(viewPtr,scene,board,runner);
+    MainUiWindow w(viewPtr,scene,board,runner,state);
 
     w.show();
 

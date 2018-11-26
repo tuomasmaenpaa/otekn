@@ -59,7 +59,7 @@
        <item>
         <widget class="QLabel" name="wheelValueLabel">
          <property name="text">
-          <string>Wheel values here</string>
+          <string/>
          </property>
         </widget>
        </item>

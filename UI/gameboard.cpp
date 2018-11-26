@@ -1,5 +1,5 @@
 #include "gameboard.hh"
-
+#include "illegalmoveexception.hh"
 namespace Student {
 
 
@@ -75,19 +75,6 @@ void GameBoard::addPawn(int playerId, int pawnId, Common::CubeCoordinate coord)
     std::shared_ptr<graphicHex> gHex;
     std::shared_ptr<Common::Hex> hex;
 
-    //if the hex exsists
-    /*if(_graphicHexMap.find(coord) != _graphicHexMap.end()){
-
-
-        gHex = _graphicHexMap.at(coord);
-
-        std::shared_ptr<Common::Pawn> pawn = std::shared_ptr<Common::Pawn>(new Common::Pawn());
-        pawn->setId(pawnId, playerId);
-
-        gHex->addPawn(pawn);
-        _pawnMap[pawnId] = pawn;
-
-    }*/
 
     //If the hex exsists add the pawn to the hex
     if(_hexMap.find(coord) != _hexMap.end()){
@@ -157,8 +144,14 @@ void GameBoard::movePawn(int, int)
 
 }
 
-void GameBoard::movePawn(int, Common::CubeCoordinate)
+void GameBoard::movePawn(int pawnId, Common::CubeCoordinate target)
 {
+
+    removePawn(pawnId);
+    addPawn(pawnId,pawnId,target);
+
+
+
 
 }
 
@@ -212,7 +205,7 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
 void GameBoard::removePawn(int id)
 {
     //If the pawn exsists
-    /*if(_pawnMap.find(id) == _pawnMap.end()){
+    if(_pawnMap.find(id) == _pawnMap.end()){
 
         return;
     }
@@ -230,13 +223,13 @@ void GameBoard::removePawn(int id)
 
     //Remove the pawn from the logic hex
     std::shared_ptr <Common::Hex> hex = _hexMap.at(coord);
-    hex->removePawn(pawn);*/
+    hex->removePawn(pawn);
+
 
 }
 
 void GameBoard::setScene(std::shared_ptr<QGraphicsScene> scene)
 {
-
     _scene = scene;
 }
 
@@ -245,15 +238,23 @@ void GameBoard::setGameState(std::shared_ptr<GameState> state)
     _gameState = state;
 }
 
+
+void GameBoard::setRunner(std::shared_ptr<Common::IGameRunner> runner)
+{
+    _runner = runner;
+}
+
 void GameBoard::addPlayer(std::shared_ptr<Player> player)
 {
     _players.push_back(player);
 }
 
+
 std::map<Common::CubeCoordinate, std::shared_ptr<graphicHex> > &GameBoard::getGraphicHexMap()
 {
     return _graphicHexMap;
 }
+
 
 std::vector<Common::CubeCoordinate> GameBoard::getCornerTiles()
 {
@@ -284,6 +285,83 @@ void GameBoard::createPawns()
 
 
 
+}
+
+void GameBoard::setClicked(std::shared_ptr<Common::Hex> selectedHex)
+{
+
+    // When called first time, function saves the hex that was chosen.
+    // When called again, function saves the second clicked hex.
+    // These will then be used for checking movements and moving
+    // items on board.
+
+    if((_firstClick == nullptr) and (playersPawnOnHex(selectedHex))){
+        _firstClick = selectedHex.get();
+        std::cout<<"clicked this one"<<std::endl;
+
+    }else if((_secondClick == nullptr) and (_firstClick != nullptr)){
+
+        _secondClick = selectedHex.get();
+        /*int x = _runner->checkPawnMovement(_firstClick->getCoordinates(),
+                                           _secondClick->getCoordinates(),
+                                           getPawn(_firstClick));
+
+        std::cout<<"second click"<<std::endl;
+        // HOX
+        // No limits on moving
+
+        if(x != -1){
+            //movePawn(getPawn(_firstClick),_secondClick->getCoordinates());
+            resetSelected();
+            _runner->getCurrentPlayer()->setActionsLeft(3);
+        }*/
+        try {
+            _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
+
+        }catch(Common::IllegalMoveException){
+            // no need to do anything
+            std::cout<<"koppi"<<std::endl;
+
+        }
+
+        std::cout<<_runner->getCurrentPlayer()->getActionsLeft()<<std::endl;
+        resetSelected();
+
+
+    }
+
+}
+
+bool GameBoard::playersPawnOnHex(std::shared_ptr<Common::Hex> selectedHex)
+{
+
+    // checking if current player has a pawn on given hex
+
+    int playerId = _gameState->currentPlayer();
+    for(auto pawn : selectedHex->getPawns()){
+        if(pawn->getId()==playerId){
+            return true;
+        }
+    }
+    return false;
+}
+
+int GameBoard::getPawn(Common::Hex *source)
+{
+    for(auto pawn : source->getPawns()){
+
+        if(pawn->getPlayerId() == _runner->currentPlayer()){
+            return pawn->getId();
+        }
+    }
+
+
+}
+
+void GameBoard::resetSelected()
+{
+    _firstClick = nullptr;
+    _secondClick = nullptr;
 }
 
 
