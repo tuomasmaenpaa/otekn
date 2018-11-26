@@ -113,13 +113,20 @@ void GameBoard::addActor(std::shared_ptr<Common::Actor> actor, Common::CubeCoord
         return;
     }
 
+    _actorMap[actor->getId()] = actor;
+
     std::shared_ptr<Common::Hex> hex;
     hex = getHex(actorCoord);
     hex->addActor(actor);
 
-    /*TODO
-     * Graphical representation of the actor
-     */
+    //If scene exsists add graphical actor to acording hex
+    if(_scene != nullptr){
+
+        std::shared_ptr<graphicHex> gHex;
+        gHex = _graphicHexMap.at(actorCoord);
+        gHex->addActor(actor);
+
+    }
 }
 
 void GameBoard::addTransport(std::shared_ptr<Common::Transport> transport, Common::CubeCoordinate coord)
@@ -155,7 +162,7 @@ void GameBoard::movePawn(int pawnId, Common::CubeCoordinate target)
 
 }
 
-void GameBoard::moveActor(int, Common::CubeCoordinate)
+void GameBoard::moveActor(int Id, Common::CubeCoordinate coord)
 {
 
 }
@@ -170,8 +177,25 @@ void GameBoard::removeTransport(int id)
 
 }
 
-void GameBoard::removeActor(int)
+void GameBoard::removeActor(int Id)
 {
+    if(_actorMap.find(Id) != _actorMap.end()){
+
+        std::shared_ptr<Common::Actor> actor = _actorMap.at(Id);
+        std::shared_ptr<Common::Hex> hex = actor->getHex();
+
+        hex->removeActor(actor);
+
+        //Remove the graphical representation if scene exsists
+        if(_scene != nullptr){
+
+            Common::CubeCoordinate coord = hex->getCoordinates();
+            std::shared_ptr<graphicHex> gHex;
+            gHex = _graphicHexMap.at(coord);
+
+            gHex->removeActor(actor);
+        }
+    }
 
 }
 
@@ -340,6 +364,38 @@ void GameBoard::setClickedSinking(std::shared_ptr<Common::Hex> selectedHex)
 
 }
 
+void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std::pair<std::string, std::string> wheelValues)
+{
+    if((_firstClick == nullptr) and (actorOnHex(selectedHex,wheelValues.first))){
+
+        _firstClick = selectedHex.get();
+
+
+    }else if((_secondClick == nullptr) and (_firstClick != nullptr)){
+
+        _secondClick = selectedHex.get();
+
+        /*try{
+
+            //KAATUMISVAARA ITEROI!!!
+            int actorId = _firstClick->getActors().at(0)->getId();
+            _runner->moveActor(_firstClick->getCoordinates(), _secondClick->getCoordinates(),actorId,wheelValues.second);
+
+            _gameState->changeGamePhase(Common::MOVEMENT);
+            //KAATUU
+            _gameState->changePlayerTurn(_gameState->currentPlayer()+1);
+
+        }catch(Common::IllegalMoveException e){
+
+        }*/
+
+        _runner->getCurrentPlayer()->setActionsLeft(3);
+        _gameState->changePlayerTurn(2);
+        resetSelected();
+
+    }
+}
+
 bool GameBoard::playersPawnOnHex(std::shared_ptr<Common::Hex> selectedHex)
 {
 
@@ -373,4 +429,17 @@ void GameBoard::resetSelected()
 }
 
 
+}
+
+bool Student::GameBoard::actorOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string actorType)
+{
+    for(std::string type : selectedHex->getActorTypes()){
+
+        if(type == actorType){
+
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -8,6 +8,9 @@ namespace Student {
 
 const std::vector<QPointF> PAWNPLACEMENTVECTOR = {QPointF(-18,-18),QPointF(12,-18),QPointF(-4,0)};
 
+const std::map<std::string, QString> ACTORMAP = {{"vortex","V"},{"shark","S"},{"seamunster","SM"},
+                                                 {"kraken","K"},{"dolphin","D"},{"boat","B"}};
+
 graphicHex::graphicHex(Common::CubeCoordinate center, std::shared_ptr <Common::Hex> hexPtr):
     _center(center),
     _hexPtr(hexPtr),
@@ -34,6 +37,8 @@ graphicHex::~graphicHex()
 
         delete a;
     }
+
+    delete _actorDisplayPtr;
 }
 
 QPointF graphicHex::calculatePoints( int HEXSIZE, int i, int centX, int centY)
@@ -148,6 +153,24 @@ void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
     }
     this->update();
 
+}
+
+void graphicHex::addActor(std::shared_ptr<Common::Actor> actor)
+{
+    if(ACTORMAP.find(actor->getActorType()) != ACTORMAP.end()){
+
+        _actorDisplayPtr = new QGraphicsSimpleTextItem(ACTORMAP.at(actor->getActorType()),this);
+        _actorDisplayPtr->setPos(-4,-8);
+        this->update();
+    }
+}
+
+void graphicHex::removeActor(std::shared_ptr<Common::Actor> actor)
+{
+    delete _actorDisplayPtr;
+    _actorDisplayPtr = nullptr;
+
+    this->update();
 }
 
 void graphicHex::changeColor()

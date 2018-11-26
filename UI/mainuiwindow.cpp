@@ -90,8 +90,11 @@ void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
     }else if ( _runner->currentGamePhase() == Common::SINKING){
         //sink
         _board->setClickedSinking(clickedHex);
+
     }else if( _runner->currentGamePhase() == Common::SPINNING){
         //spin
+        _board->setClickedSpinning(clickedHex,_wheelValues);
+
     }
 
 
@@ -102,11 +105,14 @@ void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 
 void MainUiWindow::spinWheel()
 {
-    std::pair<std::string,std::string> wheelValues;
-    wheelValues=_runner->spinWheel();
-    std::cout<<wheelValues.first<<" "<<wheelValues.second<<std::endl;
+    std::pair<std::string,std::string> values;
+    values=_runner->spinWheel();
 
-    QString qstr = QString::fromStdString(wheelValues.first + " " + wheelValues.second);
+    _wheelValues = values;
+
+    std::cout<<values.first<<" "<<values.second<<std::endl;
+
+    QString qstr = QString::fromStdString(values.first + " " + values.second);
 
     ui->wheelValueLabel->setText(qstr);
 

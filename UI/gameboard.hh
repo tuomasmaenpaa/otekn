@@ -35,7 +35,7 @@ public:
     void addTransport(std::shared_ptr<Common::Transport> transport, Common::CubeCoordinate coord);
     void movePawn(int, int);
     void movePawn(int pawnId, Common::CubeCoordinate target);
-    void moveActor(int, Common::CubeCoordinate);
+    void moveActor(int Id, Common::CubeCoordinate coord);
     void moveTransport(int id, Common::CubeCoordinate coord);
     void removeTransport(int id);
     void removeActor(int);
@@ -56,7 +56,11 @@ public:
 
     void setClickedSinking(std::shared_ptr<Common::Hex> selectedHex);
 
+    void setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std::pair<std::string,std::string> wheelValues);
+
     bool playersPawnOnHex(std::shared_ptr<Common::Hex> selectedHex);
+
+    bool actorOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string actorType);
 
     int getPawn(Common::Hex* source);
 
@@ -81,6 +85,9 @@ private:
 
     //Ths map contains the pawns with their id as the key
     std::map <int,std::shared_ptr <Common::Pawn>> _pawnMap;
+
+    //Contains actors and their id as the key
+    std::map <int,std::shared_ptr<Common::Actor>> _actorMap;
 
     std::vector<std::shared_ptr<Common::IPlayer>> _players;
 

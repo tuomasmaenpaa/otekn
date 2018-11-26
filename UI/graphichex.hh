@@ -13,6 +13,7 @@
 
 #include "hex.hh"
 #include "cubecoordinate.hh"
+#include "actor.hh"
 #include <QGraphicsObject>
 
 
@@ -52,6 +53,9 @@ public:
     void addPawn(std::shared_ptr<Common::Pawn> pawn);
     void removePawn(std::shared_ptr<Common::Pawn> pawn);
 
+    void addActor(std::shared_ptr<Common::Actor> actor);
+    void removeActor(std::shared_ptr<Common::Actor> actor);
+
     void changeColor();
 
 signals:
@@ -68,6 +72,9 @@ private:
 
     //Stores the graphical representations of the pawns
     std::vector<QGraphicsSimpleTextItem*> _pawnDisplayVector = {(nullptr), (nullptr), (nullptr)};
+
+    //Stores the graphical representation of the actor on the tile
+    QGraphicsSimpleTextItem* _actorDisplayPtr;
 
     QBrush _brush;
 

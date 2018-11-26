@@ -40,6 +40,8 @@ private:
     std::shared_ptr<Student::GameBoard> _board;
     std::shared_ptr <Common::IGameRunner> _runner;
     std::shared_ptr <Student::GameState> _state;
+
+    std::pair <std::string,std::string> _wheelValues;
 };
 
 #endif // MAINUIWINDOW_HH
