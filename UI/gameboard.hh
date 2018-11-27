@@ -36,7 +36,7 @@ public:
     void movePawn(int, int);
     void movePawn(int pawnId, Common::CubeCoordinate target);
     void moveActor(int Id, Common::CubeCoordinate coord);
-    void moveTransport(int id, Common::CubeCoordinate coord);
+    void moveTransport(int Id, Common::CubeCoordinate coord);
     void removeTransport(int id);
     void removeActor(int);
     void addHex(std::shared_ptr<Common::Hex> newHex);
@@ -88,6 +88,8 @@ private:
 
     //Contains actors and their id as the key
     std::map <int,std::shared_ptr<Common::Actor>> _actorMap;
+
+    std::map <int,std::shared_ptr<Common::Transport>> _transportMap;
 
     std::vector<std::shared_ptr<Common::IPlayer>> _players;
 

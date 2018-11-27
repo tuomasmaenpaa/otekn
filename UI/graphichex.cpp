@@ -173,6 +173,24 @@ void graphicHex::removeActor(std::shared_ptr<Common::Actor> actor)
     this->update();
 }
 
+void graphicHex::addTransport(std::shared_ptr<Common::Transport> trans)
+{
+    if(ACTORMAP.find(trans->getTransportType()) != ACTORMAP.end()){
+
+        _actorDisplayPtr = new QGraphicsSimpleTextItem(ACTORMAP.at(trans->getTransportType()),this);
+        _actorDisplayPtr->setPos(-4,-8);
+        this->update();
+    }
+}
+
+void graphicHex::removeTransport()
+{
+    delete _actorDisplayPtr;
+    _actorDisplayPtr = nullptr;
+
+    this->update();
+}
+
 void graphicHex::changeColor()
 {
     _brush.setColor(setColor());

@@ -14,6 +14,7 @@
 #include "hex.hh"
 #include "cubecoordinate.hh"
 #include "actor.hh"
+#include "transport.hh"
 #include <QGraphicsObject>
 
 
@@ -56,6 +57,9 @@ public:
     void addActor(std::shared_ptr<Common::Actor> actor);
     void removeActor(std::shared_ptr<Common::Actor> actor);
 
+    void addTransport(std::shared_ptr<Common::Transport> trans);
+    void removeTransport();
+
     void changeColor();
 
 signals:
@@ -68,13 +72,13 @@ private:
     Common::CubeCoordinate _center;
 
     //The hex that this graphichex represents
-    std::shared_ptr <Common::Hex> _hexPtr;
+    std::shared_ptr <Common::Hex> _hexPtr = nullptr;
 
     //Stores the graphical representations of the pawns
     std::vector<QGraphicsSimpleTextItem*> _pawnDisplayVector = {(nullptr), (nullptr), (nullptr)};
 
     //Stores the graphical representation of the actor on the tile
-    QGraphicsSimpleTextItem* _actorDisplayPtr;
+    QGraphicsSimpleTextItem* _actorDisplayPtr = nullptr;
 
     QBrush _brush;
 
