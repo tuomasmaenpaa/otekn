@@ -30,6 +30,8 @@ public:
     ~MainUiWindow();
     void updateLabels();
 
+    bool victoryRoyale();
+
 public slots:
     void tileClicked(std::shared_ptr<Common::Hex> clickedHex);
     void spinWheel();

@@ -67,14 +67,8 @@ public:
     void resetSelected();
 
     void nextPlayer();
-    //TODO
-    /*  Clicking hgex sends signal to slot
-     * check what phase it is
-     * if movement phase, check legal moves
-     * if sinking phase check if sinkable tile
-     * if spinning check actor movement
-     *
-     */
+
+    bool winCheck();
 
 private:
 

@@ -4,6 +4,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <map>
+#include <QMessageBox>
 
 
 
@@ -74,6 +75,11 @@ void MainUiWindow::updateLabels()
 
 }
 
+bool MainUiWindow::victoryRoyale()
+{
+    _board->winCheck();
+}
+
 void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 {
     std::cout<<"Here"<<std::endl;
@@ -84,6 +90,15 @@ void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
         //move
         _board->setClickedMovement(clickedHex);
 
+        //If the game is won
+        if(victoryRoyale()){
+
+            QMessageBox box;
+            box.setText("VICTORY ROYALE");
+            box.setIcon(QMessageBox::Warning);
+            box.exec();
+            close();
+        }
 
 
 

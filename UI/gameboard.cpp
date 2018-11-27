@@ -512,6 +512,28 @@ void GameBoard::nextPlayer()
 
 }
 
+bool GameBoard::winCheck()
+{
+    std::shared_ptr<Common::Hex> center;
+
+    for(auto tile : _hexMap){
+
+        if((tile.first.x == 0) and (tile.first.y == 0) and (tile.first.z == 0)){
+
+            center = tile.second;
+        }
+
+    }
+
+    //Victory royale
+    if(center->getPawnAmount() > 0){
+
+        return true;
+    }
+
+    return false;
+}
+
 
 }
 
