@@ -62,6 +62,8 @@ public:
 
     bool actorOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string actorType);
 
+    bool transportOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string transportType);
+
     int getPawn(Common::Hex* source);
 
     void resetSelected();

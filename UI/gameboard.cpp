@@ -414,7 +414,8 @@ void GameBoard::setClickedSinking(std::shared_ptr<Common::Hex> selectedHex)
 
 void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std::pair<std::string, std::string> wheelValues)
 {
-    if((_firstClick == nullptr) and (actorOnHex(selectedHex,wheelValues.first))){
+    if((_firstClick == nullptr) and
+            ((actorOnHex(selectedHex,wheelValues.first))or(transportOnHex(selectedHex,wheelValues.first)))){
 
         _firstClick = selectedHex.get();
 
@@ -423,30 +424,66 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
 
         _secondClick = selectedHex.get();
 
-        try{
+        // TODO mitä liikutetaan actor/trans/ei liiku
 
-            std::vector<std::shared_ptr<Common::Actor>> actorVector= _firstClick->getActors();
 
-            for(auto actor : actorVector){
 
-                if(actor->getActorType() == wheelValues.first){
+        if(wheelValues.first != "dolphin"){
+            try{
 
-                    _runner->moveActor(_firstClick->getCoordinates(), _secondClick->getCoordinates(),actor->getId(),wheelValues.second);
+                std::vector<std::shared_ptr<Common::Actor>> actorVector= _firstClick->getActors();
 
-                    nextPlayer();
+                for(auto actor : actorVector){
+
+                    if(actor->getActorType() == wheelValues.first){
+
+                        _runner->moveActor(_firstClick->getCoordinates(), _secondClick->getCoordinates(),actor->getId(),wheelValues.second);
+
+                        nextPlayer();
+                        resetSelected();
+                        break;
+
+                    }
 
                 }
+            }catch(Common::IllegalMoveException){
+                resetSelected();
 
             }
 
+        }else{
 
-        }catch(Common::IllegalMoveException){
+
+
+            try{
+
+                std::vector<std::shared_ptr<Common::Transport>> transports = _firstClick->getTransports();
+
+                for(auto transport : transports){
+
+                    if(transport->getTransportType() == wheelValues.first){
+
+                        _runner->moveTransportWithSpinner(_firstClick->getCoordinates(),_secondClick->getCoordinates(),transport->getId(),wheelValues.second);
+
+                        nextPlayer();
+                        resetSelected();
+                        break;
+                    }
+                }
+
+
+
+            }catch(Common::IllegalMoveException){
+                resetSelected();
+
+            }
 
         }
 
-        resetSelected();
 
-    }
+        }
+
+
 }
 
 bool GameBoard::playersPawnOnHex(std::shared_ptr<Common::Hex> selectedHex)
@@ -535,7 +572,7 @@ bool GameBoard::winCheck()
 }
 
 
-}
+
 
 bool Student::GameBoard::actorOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string actorType)
 {
@@ -548,4 +585,22 @@ bool Student::GameBoard::actorOnHex(std::shared_ptr<Common::Hex> selectedHex, st
     }
 
     return false;
+}
+
+bool Student::GameBoard::transportOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string transportType)
+{
+
+    for(auto transport : selectedHex->getTransports()){
+
+        if(transport->getTransportType() == transportType){
+
+            return true;
+        }
+    }
+
+    return false;
+
+
+}
+
 }
