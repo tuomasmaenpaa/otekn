@@ -1,5 +1,9 @@
 #include "gameboard.hh"
 #include "illegalmoveexception.hh"
+#include "gameexception.hh"
+#include "boat.hh"
+#include "dolphin.hh"
+
 namespace Student {
 
 
@@ -193,10 +197,18 @@ void GameBoard::moveActor(int Id, Common::CubeCoordinate coord)
 
 void GameBoard::moveTransport(int Id, Common::CubeCoordinate coord)
 {
-    //TODO NONEXSISTENT TILE CHECK
     if((_transportMap.find(Id) != _transportMap.end()) and (_hexMap.find(coord) != _hexMap.end())){
 
+
         std::shared_ptr<Common::Transport> trans = _transportMap.at(Id);
+        std::shared_ptr<Common::Hex> origin = trans->getHex();
+
+        //trans->move(_hexMap.at(coord));
+        for(auto pawn : origin->getPawns()){
+            movePawn(pawn->getId(),coord);
+        }
+
+
         removeTransport(Id);
         addTransport(trans, coord);
     }
@@ -240,7 +252,7 @@ void GameBoard::removeActor(int Id)
                 std::shared_ptr<graphicHex> gHex;
                 gHex = _graphicHexMap.at(coord);
 
-                gHex->removeActor(actor);
+                gHex->removeActor();
             }
         }
     }
@@ -375,17 +387,48 @@ void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
 
         _secondClick = selectedHex.get();
 
-        try {
+        if(_firstClick->getTransports().size() == 0){
 
-            // if movement is successful, move on to next phase
-            _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
-            _gameState->changeGamePhase(Common::SINKING);
+            try {
 
-        }catch(Common::IllegalMoveException){
-            // no need to do anything
+                // if movement is successful, move on to next phase
+                _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
+                _gameState->changeGamePhase(Common::SINKING);
+
+            }catch(Common::IllegalMoveException){
+                // no need to do anything
+
+            }
+            resetSelected();
+
+        }else{
+            // get transport
+
+            //TODO ACTORIEN JA TRANSPORTTIEN RAJOITUS MAX YKSI PER HEX PUUTTUUU JA ON ELINTÄRKEÄ
+
+            std::shared_ptr<Common::Transport> trans = _firstClick->getTransports().at(0);
+
+            try{
+
+
+                // If trying to move from transport to a land piece AKA not water or to another transport
+
+                if((_secondClick->getPieceType()!="Water") or (_secondClick->getTransports().size()>0)){
+
+                    _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
+
+                }else{
+
+                    _runner->moveTransport(_firstClick->getCoordinates(),_secondClick->getCoordinates(),trans->getId());
+                }
+                _gameState->changeGamePhase(Common::SINKING);
+
+            }catch(Common::IllegalMoveException){
+                //nothing done
+            }
+            resetSelected();
 
         }
-        resetSelected();
 
 
     }
@@ -395,7 +438,7 @@ void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
 void GameBoard::setClickedSinking(std::shared_ptr<Common::Hex> selectedHex)
 {
     try{
-        std::cout<<_runner->flipTile(selectedHex->getCoordinates())<<std::endl;
+       _runner->flipTile(selectedHex->getCoordinates());
 
         //TODO add actor
 
@@ -522,6 +565,9 @@ void GameBoard::resetSelected()
 
 void GameBoard::nextPlayer()
 {
+    // Restore the actions of player ending their turn
+    _runner->getCurrentPlayer()->setActionsLeft(3);
+
     int currentPlayer = _runner->currentPlayer();
 
     //If the current player is the last in turn change the player to first in the rotation
@@ -570,6 +616,18 @@ bool GameBoard::winCheck()
 
     return false;
 }
+
+void GameBoard::checkActorMovement(std::shared_ptr<Common::Hex> target)
+{
+
+    // Moving two actors in the same hex is not allowed
+
+    if(target->getActors().size() > 0){
+        //throw Common::IllegalMoveException("");
+    }
+
+}
+
 
 
 

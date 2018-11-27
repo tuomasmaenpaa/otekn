@@ -55,7 +55,7 @@ public:
     void removePawn(std::shared_ptr<Common::Pawn> pawn);
 
     void addActor(std::shared_ptr<Common::Actor> actor);
-    void removeActor(std::shared_ptr<Common::Actor> actor);
+    void removeActor();
 
     void addTransport(std::shared_ptr<Common::Transport> trans);
     void removeTransport();
@@ -79,6 +79,8 @@ private:
 
     //Stores the graphical representation of the actor on the tile
     QGraphicsSimpleTextItem* _actorDisplayPtr = nullptr;
+
+    QGraphicsSimpleTextItem* _transportDisplayPtr = nullptr;
 
     QBrush _brush;
 

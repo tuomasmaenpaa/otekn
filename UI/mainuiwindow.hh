@@ -35,6 +35,7 @@ public:
 public slots:
     void tileClicked(std::shared_ptr<Common::Hex> clickedHex);
     void spinWheel();
+    void endTurn();
 
 private:
     Ui::MainUiWindow *ui;

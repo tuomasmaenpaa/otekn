@@ -41,7 +41,7 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
 
 
     connect(ui->spinWheelPushButton,&QPushButton::clicked, this, &MainUiWindow::spinWheel);
-
+    connect(ui->endTurnPushButton,&QPushButton::clicked, this, &MainUiWindow::endTurn);
     /*
     QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
     ui->playerTurnLabel->setText(turn);
@@ -77,7 +77,7 @@ void MainUiWindow::updateLabels()
 
 bool MainUiWindow::victoryRoyale()
 {
-    _board->winCheck();
+    return _board->winCheck();
 }
 
 void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
@@ -142,6 +142,13 @@ void MainUiWindow::spinWheel()
 
 
     update();
+    updateLabels();
+
+}
+
+void MainUiWindow::endTurn()
+{
+    _board->nextPlayer();
     updateLabels();
 
 }

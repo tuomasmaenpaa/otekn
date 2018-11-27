@@ -72,6 +72,12 @@ public:
 
     bool winCheck();
 
+    void checkActorMovement(std::shared_ptr<Common::Hex> target);
+
+    void checkTransportMovement(std::shared_ptr<Common::Hex> target);
+
+
+
 private:
 
     //This map contains all the hexes with their cubecoordinate as the key
