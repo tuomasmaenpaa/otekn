@@ -423,22 +423,27 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
 
         _secondClick = selectedHex.get();
 
-        /*try{
+        try{
 
-            //KAATUMISVAARA ITEROI!!!
-            int actorId = _firstClick->getActors().at(0)->getId();
-            _runner->moveActor(_firstClick->getCoordinates(), _secondClick->getCoordinates(),actorId,wheelValues.second);
+            std::vector<std::shared_ptr<Common::Actor>> actorVector= _firstClick->getActors();
 
-            _gameState->changeGamePhase(Common::MOVEMENT);
-            //KAATUU
-            _gameState->changePlayerTurn(_gameState->currentPlayer()+1);
+            for(auto actor : actorVector){
 
-        }catch(Common::IllegalMoveException e){
+                if(actor->getActorType() == wheelValues.first){
 
-        }*/
+                    _runner->moveActor(_firstClick->getCoordinates(), _secondClick->getCoordinates(),actor->getId(),wheelValues.second);
 
-        _runner->getCurrentPlayer()->setActionsLeft(3);
-        _gameState->changePlayerTurn(2);
+                    nextPlayer();
+
+                }
+
+            }
+
+
+        }catch(Common::IllegalMoveException){
+
+        }
+
         resetSelected();
 
     }
@@ -476,6 +481,35 @@ void GameBoard::resetSelected()
 {
     _firstClick = nullptr;
     _secondClick = nullptr;
+}
+
+void GameBoard::nextPlayer()
+{
+    int currentPlayer = _runner->currentPlayer();
+
+    //If the current player is the last in turn change the player to first in the rotation
+    if(currentPlayer == _players.size()){
+
+        _gameState->changePlayerTurn(_players.at(0)->getPlayerId());
+
+    }else{
+
+        int counter = 0;
+
+        //Set the next player as the player in turn
+        for(auto player:_players){
+
+            if(player->getPlayerId() == currentPlayer){
+
+                _gameState->changePlayerTurn(_players.at(counter+1)->getPlayerId());
+
+            }
+
+            ++counter;
+
+        }
+    }
+
 }
 
 

@@ -66,6 +66,7 @@ public:
 
     void resetSelected();
 
+    void nextPlayer();
     //TODO
     /*  Clicking hgex sends signal to slot
      * check what phase it is
