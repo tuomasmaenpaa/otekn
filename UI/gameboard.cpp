@@ -173,16 +173,11 @@ void GameBoard::movePawn(int, int)
 
 void GameBoard::movePawn(int pawnId, Common::CubeCoordinate target)
 {
-    //TODO NONEXSISTENT TILE CHECK
     if(_hexMap.find(target) != _hexMap.end()){
 
         removePawn(pawnId);
         addPawn(pawnId,pawnId,target);
     }
-
-
-
-
 }
 
 void GameBoard::moveActor(int Id, Common::CubeCoordinate coord)
