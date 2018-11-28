@@ -74,7 +74,9 @@ public:
 
     void checkActorMovement(Common::Hex *target);
 
-    void checkTransportMovement(Common::Hex* target);
+    void checkTransportMovement(Common::Hex *origin, Common::Hex* target);
+
+
 
 
 

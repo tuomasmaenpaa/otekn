@@ -418,7 +418,7 @@ void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
                     _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
 
                 }else{
-                    checkTransportMovement(_secondClick);
+                    checkTransportMovement(_firstClick,_secondClick);
                     _runner->moveTransport(_firstClick->getCoordinates(),_secondClick->getCoordinates(),trans->getId());
                 }
                 _gameState->changeGamePhase(Common::SINKING);
@@ -497,8 +497,6 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
 
         }else{
 
-
-
             try{
 
                 std::vector<std::shared_ptr<Common::Transport>> transports = _firstClick->getTransports();
@@ -506,7 +504,7 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
                 for(auto transport : transports){
 
                     if(transport->getTransportType() == wheelValues.first){
-                        checkTransportMovement(_secondClick);
+                        checkTransportMovement(_firstClick,_secondClick);
                         _runner->moveTransportWithSpinner(_firstClick->getCoordinates(),_secondClick->getCoordinates(),transport->getId(),wheelValues.second);
 
                         nextPlayer();
@@ -514,9 +512,6 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
                         break;
                     }
                 }
-
-
-
             }catch(...){
                 resetSelected();
 
@@ -628,12 +623,15 @@ void GameBoard::checkActorMovement(Common::Hex* target)
     }
 }
 
-void GameBoard::checkTransportMovement(Common::Hex *target)
+void GameBoard::checkTransportMovement(Common::Hex* origin,Common::Hex *target)
 {
     if(target->getTransports().size()>0){
         throw std::exception();
+    }else if(origin->getPawnAmount() + target->getPawnAmount() > 3){
+        throw std::exception();
     }
 }
+
 
 
 

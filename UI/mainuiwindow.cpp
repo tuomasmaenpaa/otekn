@@ -41,6 +41,7 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
 
 
     connect(ui->spinWheelPushButton,&QPushButton::clicked, this, &MainUiWindow::spinWheel);
+    ui->spinWheelPushButton->setDisabled(true);
     connect(ui->endTurnPushButton,&QPushButton::clicked, this, &MainUiWindow::endTurn);
     /*
     QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
@@ -68,6 +69,12 @@ void MainUiWindow::updateLabels()
 
     QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
     ui->playerTurnLabel->setText(turn);
+
+    if(_state->currentGamePhase() == Common::SPINNING){
+        ui->spinWheelPushButton->setDisabled(false);
+    }else{
+        ui->spinWheelPushButton->setDisabled(true);
+    }
 
     update();
 
