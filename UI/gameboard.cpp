@@ -623,7 +623,8 @@ void GameBoard::checkActorMovement(std::shared_ptr<Common::Hex> target)
     // Moving two actors in the same hex is not allowed
 
     if(target->getActors().size() > 0){
-        //throw Common::IllegalMoveException("");
+        throw Common::IllegalMoveException("Illegal actor move");
+
     }
 
 }

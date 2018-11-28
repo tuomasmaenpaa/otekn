@@ -143,13 +143,15 @@ void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
         // When the correct pawn is found, delete the SimpleTextItem that
         // represents the pawn. Then set the pointer to nullptr
 
-        if(_pawnDisplayVector.at(i)->text().toInt() == pawn->getId()){
+        if(_pawnDisplayVector.at(i) != nullptr){
 
-            delete _pawnDisplayVector.at(i);
-            _pawnDisplayVector[i] = nullptr;
-            break;
-        }
+            if(_pawnDisplayVector.at(i)->text().toInt() == pawn->getId()){
 
+                delete _pawnDisplayVector.at(i);
+                _pawnDisplayVector[i] = nullptr;
+                break;
+            }
+         }
     }
     this->update();
 
