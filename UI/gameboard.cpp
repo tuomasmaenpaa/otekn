@@ -418,12 +418,12 @@ void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
                     _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
 
                 }else{
-
+                    checkTransportMovement(_secondClick);
                     _runner->moveTransport(_firstClick->getCoordinates(),_secondClick->getCoordinates(),trans->getId());
                 }
                 _gameState->changeGamePhase(Common::SINKING);
 
-            }catch(Common::IllegalMoveException){
+            }catch(...){
                 //nothing done
             }
             resetSelected();
@@ -480,6 +480,7 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
 
                     if(actor->getActorType() == wheelValues.first){
 
+                        checkActorMovement(_secondClick);
                         _runner->moveActor(_firstClick->getCoordinates(), _secondClick->getCoordinates(),actor->getId(),wheelValues.second);
 
                         nextPlayer();
@@ -489,7 +490,7 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
                     }
 
                 }
-            }catch(Common::IllegalMoveException){
+            }catch(...){
                 resetSelected();
 
             }
@@ -505,7 +506,7 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
                 for(auto transport : transports){
 
                     if(transport->getTransportType() == wheelValues.first){
-
+                        checkTransportMovement(_secondClick);
                         _runner->moveTransportWithSpinner(_firstClick->getCoordinates(),_secondClick->getCoordinates(),transport->getId(),wheelValues.second);
 
                         nextPlayer();
@@ -516,7 +517,7 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
 
 
 
-            }catch(Common::IllegalMoveException){
+            }catch(...){
                 resetSelected();
 
             }
@@ -617,16 +618,21 @@ bool GameBoard::winCheck()
     return false;
 }
 
-void GameBoard::checkActorMovement(std::shared_ptr<Common::Hex> target)
+void GameBoard::checkActorMovement(Common::Hex* target)
 {
 
-    // Moving two actors in the same hex is not allowed
+    // Moving two actors to the same hex is not allowed
 
     if(target->getActors().size() > 0){
-        throw Common::IllegalMoveException("Illegal actor move");
-
+        throw std::exception();
     }
+}
 
+void GameBoard::checkTransportMovement(Common::Hex *target)
+{
+    if(target->getTransports().size()>0){
+        throw std::exception();
+    }
 }
 
 

@@ -72,9 +72,9 @@ public:
 
     bool winCheck();
 
-    void checkActorMovement(std::shared_ptr<Common::Hex> target);
+    void checkActorMovement(Common::Hex *target);
 
-    void checkTransportMovement(std::shared_ptr<Common::Hex> target);
+    void checkTransportMovement(Common::Hex* target);
 
 
 
