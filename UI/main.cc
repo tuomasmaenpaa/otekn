@@ -2,7 +2,6 @@
 #include "gamestate.hh"
 #include "player.hh"
 #include "hex.hh"
-#include "mainwindow.hh"
 #include "gameengine.hh"
 #include "openingdialog.hh"
 #include <iostream>
@@ -36,7 +35,6 @@ int main(int argc, char *argv[])
     int playerCount;
 
     if(dialog.exec() == QDialog::Accepted){
-       std::cout<<dialog.getSpinBoxValue()<<std::endl;
        playerCount = dialog.getSpinBoxValue();
 
     }else{
@@ -60,12 +58,7 @@ int main(int argc, char *argv[])
     board->createPawns();
     board->setRunner(runner);
 
-
-    //Student::MainWindow w(view, scene, runner);
-    QGraphicsView* viewPtr = &view;
-    //w.setCentralWidget(viewPtr);
-    //w.show();
-    MainUiWindow w(viewPtr,scene,board,runner,state);
+    MainUiWindow w(scene,board,runner,state);
 
     w.show();
 

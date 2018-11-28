@@ -22,7 +22,7 @@ class MainUiWindow : public QMainWindow
     //Q_OBJECT
 
 public:
-    explicit MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> scene,
+    explicit MainUiWindow(std::shared_ptr<QGraphicsScene> scene,
                           std::shared_ptr<Student::GameBoard> board,
                           std::shared_ptr <Common::IGameRunner> runner,
                           std::shared_ptr <Student::GameState> state,

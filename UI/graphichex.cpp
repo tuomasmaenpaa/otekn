@@ -52,7 +52,7 @@ QPointF graphicHex::calculatePoints( int HEXSIZE, int i, int centX, int centY)
 void graphicHex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
-    std::cout<<"clicked x: "<<_center.x<<" y: "<<_center.y<<" z: "<<_center.z<<std::endl;
+    Q_UNUSED(event);
     emit clickHappened(_hexPtr);
 }
 
@@ -119,7 +119,7 @@ void graphicHex::addPawn(std::shared_ptr<Common::Pawn> pawn)
     QString qstr = QString::number(pawnNumber);
 
 
-    for(int i=0; i<_pawnDisplayVector.size();++i){
+    for(unsigned int i=0; i<_pawnDisplayVector.size();++i){
 
         if(_pawnDisplayVector.at(i) == nullptr){
 
@@ -138,7 +138,7 @@ void graphicHex::removePawn(std::shared_ptr<Common::Pawn> pawn)
 {
     //Remove the graphical representation of the pawn
 
-    for(int i = 0; i<_pawnDisplayVector.size();++i){
+    for(unsigned int i = 0; i<_pawnDisplayVector.size();++i){
 
         // When the correct pawn is found, delete the SimpleTextItem that
         // represents the pawn. Then set the pointer to nullptr

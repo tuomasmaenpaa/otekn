@@ -12,7 +12,7 @@ const std::map <Common::GamePhase,QString> PHASES = {{Common::MOVEMENT,"Movement
                                                      {Common::SINKING,"Sinking"},
                                                      {Common::SPINNING,"Spinning"}};
 
-MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> scene, std::shared_ptr<Student::GameBoard> board,
+MainUiWindow::MainUiWindow(std::shared_ptr<QGraphicsScene> scene, std::shared_ptr<Student::GameBoard> board,
                            std::shared_ptr<Common::IGameRunner> runner, std::shared_ptr <Student::GameState> state, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainUiWindow),
@@ -24,7 +24,6 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
 
 {
     ui->setupUi(this);
-    //view->setScene(_scene.get());
 
     ui->graphicsView->setScene(_scene.get());
 
@@ -42,15 +41,12 @@ MainUiWindow::MainUiWindow(QGraphicsView* view, std::shared_ptr<QGraphicsScene> 
 
     connect(ui->spinWheelPushButton,&QPushButton::clicked, this, &MainUiWindow::spinWheel);
     ui->spinWheelPushButton->setDisabled(true);
+
     connect(ui->endTurnPushButton,&QPushButton::clicked, this, &MainUiWindow::endTurn);
-    /*
-    QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
-    ui->playerTurnLabel->setText(turn);
-    */
+
     updateLabels();
 
-    //setCentralWidget(view);
-    //view->show();
+
 }
 
 MainUiWindow::~MainUiWindow()
@@ -89,9 +85,6 @@ bool MainUiWindow::victoryRoyale()
 
 void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 {
-    std::cout<<"Here"<<std::endl;
-
-
 
     if ( _runner->currentGamePhase() == Common::MOVEMENT){
         //move
@@ -132,7 +125,7 @@ void MainUiWindow::spinWheel()
 
     _wheelValues = values;
 
-    std::cout<<values.first<<" "<<values.second<<std::endl;
+
 
     QString qstr = QString::fromStdString(values.first + " " + values.second);
 

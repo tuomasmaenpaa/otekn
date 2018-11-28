@@ -14,12 +14,10 @@ CONFIG += c++14
 
 
 SOURCES += main.cc \
-    mainwindow.cpp \
     graphichex.cpp \
     gameboard.cpp \
     player.cpp \
     gamestate.cpp \
-    graphicpawn.cpp \
     openingdialog.cpp \
     mainuiwindow.cpp
 
@@ -27,9 +25,7 @@ HEADERS  += \
     gameboard.hh \
     player.hh \
     gamestate.hh \
-    mainwindow.hh \
     graphichex.hh \
-    graphicpawn.hh \
     openingdialog.hh \
     mainuiwindow.hh
 

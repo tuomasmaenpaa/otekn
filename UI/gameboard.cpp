@@ -363,7 +363,7 @@ void GameBoard::createPawns()
 
    //Adding the pawns according to the amount of players in the game.
    //Players have only one pawn and the pawns id is the same as the players.
-   for(int i = 0; i<_players.size();i++){
+   for(unsigned int i = 0; i<_players.size();i++){
        addPawn(_players.at(i)->getPlayerId(),_players.at(i)->getPlayerId(),corners.at(i));
    }
 
@@ -395,7 +395,7 @@ void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
                 _runner->movePawn(_firstClick->getCoordinates(),_secondClick->getCoordinates(),getPawn(_firstClick));
                 _gameState->changeGamePhase(Common::SINKING);
 
-            }catch(Common::IllegalMoveException){
+            }catch(const Common::IllegalMoveException&){
                 // no need to do anything
 
             }
@@ -449,7 +449,7 @@ void GameBoard::setClickedSinking(std::shared_ptr<Common::Hex> selectedHex)
         }
 
 
-    }catch(Common::IllegalMoveException){
+    }catch(const Common::IllegalMoveException&){
 
     }
 
@@ -564,7 +564,7 @@ void GameBoard::nextPlayer()
     // Restore the actions of player ending their turn
     _runner->getCurrentPlayer()->setActionsLeft(3);
 
-    int currentPlayer = _runner->currentPlayer();
+     unsigned int currentPlayer = _runner->currentPlayer();
 
     //If the current player is the last in turn change the player to first in the rotation
     if(currentPlayer == _players.size()){
@@ -575,10 +575,12 @@ void GameBoard::nextPlayer()
 
         int counter = 0;
 
+        int cPlayer = currentPlayer;
+
         //Set the next player as the player in turn
         for(auto player:_players){
 
-            if(player->getPlayerId() == currentPlayer){
+            if(player->getPlayerId() == cPlayer){
 
                 _gameState->changePlayerTurn(_players.at(counter+1)->getPlayerId());
 
