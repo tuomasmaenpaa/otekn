@@ -38,6 +38,8 @@ void GameStateTest::testCurrentPlayer()
 
 void GameStateTest::testChangeGamePhase()
 {
+
+    // Test all phase changes.
     _state.changeGamePhase(Common::MOVEMENT);
     QVERIFY(_state.currentGamePhase() == Common::MOVEMENT);
 
