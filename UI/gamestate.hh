@@ -36,6 +36,7 @@ private:
 
     // Current phase of the game.
     Common::GamePhase _currentPhase = Common::MOVEMENT;
+
     // Player in turn.
     int _currentPlayer = 1;
 
