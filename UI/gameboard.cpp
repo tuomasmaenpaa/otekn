@@ -1,8 +1,22 @@
+/*
+ * Tuomas Mäenpää, studentnumber 274403, tuomas.maenpaa@student.tut.fi
+ * Peetu Ojala, studennumber 272729, peetu.ojala@student.tut.fi
+ *
+ * Programming 3 course project
+ */
+
+
 #include "gameboard.hh"
 #include "illegalmoveexception.hh"
 #include "gameexception.hh"
 #include "boat.hh"
 #include "dolphin.hh"
+
+
+/*
+ * The implementation of gameboard functions
+ */
+
 
 namespace Student {
 
@@ -10,7 +24,6 @@ namespace Student {
 
 GameBoard::GameBoard()
 {
-
 
 }
 
@@ -168,11 +181,16 @@ void GameBoard::addTransport(std::shared_ptr<Common::Transport> transport, Commo
 
 void GameBoard::movePawn(int, int)
 {
-
+    /*
+     * Empty function that is never used, but is necessary
+     * to match the interface IGameBoard.
+     */
 }
 
 void GameBoard::movePawn(int pawnId, Common::CubeCoordinate target)
 {
+
+    // If the hex exsists, move the pawn accordingly.
     if(_hexMap.find(target) != _hexMap.end()){
 
         removePawn(pawnId);
@@ -182,6 +200,8 @@ void GameBoard::movePawn(int pawnId, Common::CubeCoordinate target)
 
 void GameBoard::moveActor(int Id, Common::CubeCoordinate coord)
 {
+
+    // If the actor and hex exsist, move the actor accordingly.
     if((_actorMap.find(Id) != _actorMap.end()) and (_hexMap.find(coord) != _hexMap.end()) ){
 
         std::shared_ptr<Common::Actor> actor = _actorMap.at(Id);
@@ -192,13 +212,15 @@ void GameBoard::moveActor(int Id, Common::CubeCoordinate coord)
 
 void GameBoard::moveTransport(int Id, Common::CubeCoordinate coord)
 {
+
+    // If the transport and hex exsist, move the transport.
     if((_transportMap.find(Id) != _transportMap.end()) and (_hexMap.find(coord) != _hexMap.end())){
 
 
         std::shared_ptr<Common::Transport> trans = _transportMap.at(Id);
         std::shared_ptr<Common::Hex> origin = trans->getHex();
 
-        //trans->move(_hexMap.at(coord));
+        // Move the pawns with the transport.
         for(auto pawn : origin->getPawns()){
             movePawn(pawn->getId(),coord);
         }
@@ -218,6 +240,7 @@ void GameBoard::removeTransport(int id)
 
         hex->removeTransport(trans);
 
+        // Update the graphics.
         if(_scene != nullptr){
 
             std::shared_ptr<graphicHex> gHex;
@@ -275,6 +298,8 @@ void GameBoard::addHex(std::shared_ptr<Common::Hex> newHex)
 
         _scene->addItem(hex.get());
 
+        // Calculate the correct centerpoint for the graphic hex and
+        // set the hex there;
         hex->setGraphicCenter();
         hex->setPosition();
         hex->update();
@@ -340,6 +365,10 @@ std::vector<Common::CubeCoordinate> GameBoard::getCornerTiles()
 
     std::vector<Common::CubeCoordinate> cornerCoords;
 
+    // Function finds the corners of the map for pawns to be placed in.
+    // Corners are Coral type and contain a 0 in its cubecoordinates,
+    // meaning its at the end of a coordinate axel.
+
     for (auto tile : _hexMap){
 
         if(tile.second->getPieceType() == "Coral" and (tile.first.x==0 or tile.first.y == 0 or tile.first.z == 0)){
@@ -391,16 +420,13 @@ void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
                 _gameState->changeGamePhase(Common::SINKING);
 
             }catch(const Common::IllegalMoveException&){
-                // no need to do anything
+                // no need to do anything, player tries again.
 
             }
             resetSelected();
 
         }else{
-            // get transport
-
-            //TODO ACTORIEN JA TRANSPORTTIEN RAJOITUS MAX YKSI PER HEX PUUTTUUU JA ON ELINTÄRKEÄ
-
+            // get transport from origin hex.
             std::shared_ptr<Common::Transport> trans = _firstClick->getTransports().at(0);
 
             try{
@@ -419,7 +445,12 @@ void GameBoard::setClickedMovement(std::shared_ptr<Common::Hex> selectedHex)
                 _gameState->changeGamePhase(Common::SINKING);
 
             }catch(...){
-                //nothing done
+                /*
+                 * Catches Common::IllegalMoveException and std::exception because
+                 * throwing our own IllegalMoveException didn't work for some reason
+                 * that nobody (even the TAs) seemed to know.
+                 */
+                //nothing done, player tries again.
             }
             resetSelected();
 
@@ -435,8 +466,6 @@ void GameBoard::setClickedSinking(std::shared_ptr<Common::Hex> selectedHex)
     try{
        _runner->flipTile(selectedHex->getCoordinates());
 
-        //TODO add actor
-
         // Change the graphic hex to a water tile
         if(_graphicHexMap.find(selectedHex->getCoordinates()) != _graphicHexMap.end()){
             _graphicHexMap.at(selectedHex->getCoordinates())->changeColor();
@@ -446,12 +475,19 @@ void GameBoard::setClickedSinking(std::shared_ptr<Common::Hex> selectedHex)
 
     }catch(const Common::IllegalMoveException&){
 
+        // Player gets to try sinking again if they couldn't click a hex that was sinkable.
+
     }
 
 }
 
 void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std::pair<std::string, std::string> wheelValues)
 {
+    // When called first time, function saves the hex that was chosen.
+    // When called again, function saves the second clicked hex.
+    // These will then be used for checking movements and moving
+    // items on board.
+
     if((_firstClick == nullptr) and
             ((actorOnHex(selectedHex,wheelValues.first))or(transportOnHex(selectedHex,wheelValues.first)))){
 
@@ -462,10 +498,9 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
 
         _secondClick = selectedHex.get();
 
-        // TODO mitä liikutetaan actor/trans/ei liiku
 
-
-
+        // Check if the movable thing in spinning phase is a dolphin(transport) or
+        // an actor.
         if(wheelValues.first != "dolphin"){
             try{
 
@@ -486,6 +521,12 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
 
                 }
             }catch(...){
+                /*
+                 * Catches Common::IllegalMoveException and std::exception because
+                 * throwing our own IllegalMoveException didn't work for some reason
+                 * that nobody (even the TAs) seemed to know.
+                 */
+                //nothing done, player tries again.
                 resetSelected();
 
             }
@@ -508,6 +549,12 @@ void GameBoard::setClickedSpinning(std::shared_ptr<Common::Hex> selectedHex, std
                     }
                 }
             }catch(...){
+                /*
+                 * Catches Common::IllegalMoveException and std::exception because
+                 * throwing our own IllegalMoveException didn't work for some reason
+                 * that nobody (even the TAs) seemed to know.
+                 */
+                //nothing done, player tries again.
                 resetSelected();
 
             }
@@ -550,6 +597,8 @@ int GameBoard::getPawn(Common::Hex *source)
 
 void GameBoard::resetSelected()
 {
+    // Set the selected hex-pointers back to nullptr
+
     _firstClick = nullptr;
     _secondClick = nullptr;
 }
@@ -592,6 +641,8 @@ bool GameBoard::winCheck()
 {
     std::shared_ptr<Common::Hex> center;
 
+
+    // Find the center of the map.
     for(auto tile : _hexMap){
 
         if((tile.first.x == 0) and (tile.first.y == 0) and (tile.first.z == 0)){
@@ -601,7 +652,7 @@ bool GameBoard::winCheck()
 
     }
 
-    //Victory royale
+    // If someone has made it to the center, they win.
     if(center->getPawnAmount() > 0){
 
         return true;
@@ -624,6 +675,8 @@ void GameBoard::checkTransportMovement(Common::Hex* origin,Common::Hex *target)
 {
     if(target->getTransports().size()>0){
         throw std::exception();
+
+    // Check if pawns in transport + pawns in target hex amount to more than 3.
     }else if(origin->getPawnAmount() + target->getPawnAmount() > 3){
         throw std::exception();
     }
@@ -636,6 +689,8 @@ void GameBoard::checkTransportMovement(Common::Hex* origin,Common::Hex *target)
 
 bool Student::GameBoard::actorOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string actorType)
 {
+
+    // Check if set type of actor is on the hex.
     for(std::string type : selectedHex->getActorTypes()){
 
         if(type == actorType){
@@ -649,7 +704,7 @@ bool Student::GameBoard::actorOnHex(std::shared_ptr<Common::Hex> selectedHex, st
 
 bool Student::GameBoard::transportOnHex(std::shared_ptr<Common::Hex> selectedHex, std::string transportType)
 {
-
+    // Check if set type of transport is on the hex.
     for(auto transport : selectedHex->getTransports()){
 
         if(transport->getTransportType() == transportType){

@@ -1,3 +1,10 @@
+/*
+ * Tuomas Mäenpää, studentnumber 274403, tuomas.maenpaa@student.tut.fi
+ * Peetu Ojala, studennumber 272729, peetu.ojala@student.tut.fi
+ *
+ * Programming 3 course project
+ */
+
 #include "gameboard.hh"
 #include "gamestate.hh"
 #include "player.hh"
@@ -17,19 +24,19 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    QGraphicsView view;
-    std::shared_ptr<QGraphicsScene> scene = std::shared_ptr<QGraphicsScene>(new QGraphicsScene(-500,-500,1000,1000,&view));
-
+    //Create the scene where game is presented and a gameboard.
+    std::shared_ptr<QGraphicsScene> scene = std::shared_ptr<QGraphicsScene>(new QGraphicsScene(-500,-500,1000,1000));
     std::shared_ptr <Student::GameBoard> board = std::shared_ptr<Student::GameBoard>(new Student::GameBoard());
 
-
+    // Give the scene to the board.
     board->setScene(scene);
 
+    // Create a gamestate object and a vector for players.
     std::shared_ptr <Student::GameState> state = std::shared_ptr<Student::GameState>(new Student::GameState());
     std::vector<std::shared_ptr<Common::IPlayer>> players;
 
 
-
+    // Ask the user how many players they want (1-6).
     OpeningDialog dialog;
 
     int playerCount;
@@ -49,15 +56,17 @@ int main(int argc, char *argv[])
     }
 
 
-
+    // Initialize runner.
     std::shared_ptr <Common::IGameRunner> runner;
 
     runner = Common::Initialization::getGameRunner(board, state, players);
+    // Set the gameboard ready for the game.
     board->setGameState(state);
     board->getCornerTiles();
     board->createPawns();
     board->setRunner(runner);
 
+    // Create and show the mainwindow.
     MainUiWindow w(scene,board,runner,state);
 
     w.show();

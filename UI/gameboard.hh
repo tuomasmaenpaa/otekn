@@ -24,7 +24,7 @@
 #include "igamerunner.hh"
 
 
-/* Headerfile for Student::GameBoard class
+/* Headerfile for Student::GameBoard class that is derived from Common::IGameBoard.
  *
  * Class handles the logical components of the game and calls the graphic components
  * to do the same actions
@@ -39,7 +39,7 @@ class GameBoard : public Common::IGameBoard
 public: 
 
 
-
+    // SEE IGAMEBOARD FOR DOCUMENTATION OF FUNCTIONS BELOW.
     GameBoard();
     ~GameBoard();
 
@@ -58,6 +58,7 @@ public:
     void removeActor(int);
     void addHex(std::shared_ptr<Common::Hex> newHex);
     void removePawn(int id);
+    // SEE IGAMEBOARD FOR DOCUMENTATION OF FUNCTIONS ABOVE.
 
 
     /* Function gives gameboard a pointer to the scene where the graphical components

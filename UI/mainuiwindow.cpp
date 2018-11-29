@@ -24,12 +24,13 @@ MainUiWindow::MainUiWindow(std::shared_ptr<QGraphicsScene> scene, std::shared_pt
 
 {
     ui->setupUi(this);
-
     ui->graphicsView->setScene(_scene.get());
 
     std::shared_ptr<Student::graphicHex> gHexPtr;
     Student::graphicHex* hexPtr;
 
+
+    // Connect graphicHexes signals to mainUiWindows slots.
     for(auto a : _board->getGraphicHexMap()){
 
         gHexPtr = a.second;
@@ -38,12 +39,13 @@ MainUiWindow::MainUiWindow(std::shared_ptr<QGraphicsScene> scene, std::shared_pt
         connect(hexPtr, &Student::graphicHex::clickHappened, this, &MainUiWindow::tileClicked);
     }
 
-
+    // Connect the buttons.
     connect(ui->spinWheelPushButton,&QPushButton::clicked, this, &MainUiWindow::spinWheel);
     ui->spinWheelPushButton->setDisabled(true);
 
     connect(ui->endTurnPushButton,&QPushButton::clicked, this, &MainUiWindow::endTurn);
 
+    // Update labels on thid window.
     updateLabels();
 
 
@@ -56,6 +58,8 @@ MainUiWindow::~MainUiWindow()
 
 void MainUiWindow::updateLabels()
 {
+    // Updates the labels on this mainUiWindow according to the game's phase.
+
     Common::GamePhase phase = _runner->currentGamePhase();
 
     if(PHASES.find(phase)!= PHASES.end()){
@@ -66,6 +70,7 @@ void MainUiWindow::updateLabels()
     QString turn = "Player " + QString::number(_runner->getCurrentPlayer()->getPlayerId()) + " turn";
     ui->playerTurnLabel->setText(turn);
 
+    // Set the spinWheelPushButton to be active only in SPINNIG phase.
     if(_state->currentGamePhase() == Common::SPINNING){
         ui->spinWheelPushButton->setDisabled(false);
     }else{
@@ -87,6 +92,7 @@ void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 {
 
     if ( _runner->currentGamePhase() == Common::MOVEMENT){
+
         //move
         _board->setClickedMovement(clickedHex);
 
@@ -103,10 +109,12 @@ void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 
 
     }else if ( _runner->currentGamePhase() == Common::SINKING){
+
         //sink
         _board->setClickedSinking(clickedHex);
 
     }else if( _runner->currentGamePhase() == Common::SPINNING){
+
         //spin
         _board->setClickedSpinning(clickedHex,_wheelValues);
 
@@ -120,6 +128,8 @@ void MainUiWindow::tileClicked(std::shared_ptr<Common::Hex> clickedHex)
 
 void MainUiWindow::spinWheel()
 {
+
+    // Get wheelvalues from runner.
     std::pair<std::string,std::string> values;
     values=_runner->spinWheel();
 
@@ -139,7 +149,7 @@ void MainUiWindow::spinWheel()
     }
 
 
-
+    // Update labels.
 
     update();
     updateLabels();
@@ -148,6 +158,7 @@ void MainUiWindow::spinWheel()
 
 void MainUiWindow::endTurn()
 {
+    // Changes turn to next player.
     _board->nextPlayer();
     updateLabels();
 

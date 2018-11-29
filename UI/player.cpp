@@ -1,6 +1,14 @@
+/*
+ * Tuomas Mäenpää, studentnumber 274403, tuomas.maenpaa@student.tut.fi
+ * Peetu Ojala, studennumber 272729, peetu.ojala@student.tut.fi
+ *
+ * Programming 3 course project
+ */
 #include "player.hh"
 namespace Student {
 
+/* Implemention of Player-class functions.
+ */
 
 Player::Player(int id): _Id(id), _actionsLeft(3)
 {
